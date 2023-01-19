@@ -1,11 +1,11 @@
 // backend/routes/index.js
+// import packages and routers
 const express = require('express');
 const router = express.Router();
+const apiRouter = require('./api');
 
-// router.get('/hello/world', function(req, res) {
-//   res.cookie('XSRF-TOKEN', req.csrfToken());
-//   res.send('Hello World!');
-// });
+// connect api routers
+router.use('/api', apiRouter);
 
 // Add a XSRF-TOKEN cookie
 router.get("/api/csrf/restore", (req, res) => {
