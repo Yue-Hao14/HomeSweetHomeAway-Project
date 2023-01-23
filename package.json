@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Yue-Hao14/API-project/issues"
   },
-  "homepage": "https://github.com/Yue-Hao14/API-project#readme"
+  "homepage": "https://github.com/Yue-Hao14/API-project#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3"
+  }
 }
