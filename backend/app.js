@@ -72,7 +72,7 @@ app.use((_req, _res, next) => {
   next(err);
 });
 
-// Process sequelize errors
+// Process sequelize validation errors
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
   if (err instanceof ValidationError) {

@@ -3,7 +3,7 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.send.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
 
@@ -35,7 +35,7 @@ module.exports = {
         allowNull: false
       },
       hashedPassword: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING.BINARY,
         allowNull: false
       },
       createdAt: {
