@@ -9,9 +9,8 @@ const { restoreUser } = require("../../utils/auth.js");
 // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
-router.use('/session', sessionRouter);
-
-router.use('/users', usersRouter);
+router.use('/session', sessionRouter); // log in and log out routers
+router.use('/users', usersRouter); // user sign up routers
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
