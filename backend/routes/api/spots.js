@@ -1,12 +1,68 @@
 const express = require('express');
-const { Spot, SpotImage, Review } = require('../../db/models');
+const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
 
-// Get spots of current user
-router.get('/current', restoreUser, async (req, res, next) => {
-  let result = {};
+// Get details of a spot by id
+router.get('/:spotId', async (req, res, _next) => {
+
+  // find spots by spotId
+  const spotId = req.params.spotId;
+
+  const spot = await Spot.findByPk(spotId, {
+    include: [{
+      model: SpotImage,
+      attributes: {
+        exclude: ['spotId','createdAt','updatedAt']
+      }
+    }, {
+      model: User,
+      as: 'Owner',
+      attributes: {
+        exclude: ['email', 'hashedPassword','username','createdAt','updatedAt']
+      }}, Review]
+  })
+
+
+  // if no spot found in db
+  // console.log(spot)
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
   
+  const spotPOJO = spot.toJSON();
+  // console.log(spotPOJO)
+
+  // iterate through Reviews array to get numReviews and avgStarRating
+  const reviewsArr = spotPOJO.Reviews;
+  // console.log(reviewsArr)
+
+  let numReviews = 0;
+  let totalRating = 0;
+  reviewsArr.forEach(review => {
+    numReviews++;
+    totalRating += review.stars
+  });
+  const avgStarRating = totalRating / numReviews;
+  spotPOJO.numReviews = numReviews;
+  spotPOJO.avgStarRating = avgStarRating;
+
+  delete spotPOJO.Reviews;
+
+  return res.json(spotPOJO);
+})
+
+
+
+
+// Get spots of current user
+router.get('/current', restoreUser, async (req, res, _next) => {
+  let result = {};
+
   // extract user object (promise) from restoreUser middleware output
   const { user } = req;
 
