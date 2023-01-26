@@ -38,7 +38,10 @@ router.post(
       return next(err);
     }
 
-    await setTokenCookie(res, user);
+    const token = await setTokenCookie(res, user);
+
+    // add token to user obj as part of res
+    user.dataValues.token = token
 
     return res.json({
       user: user
@@ -68,8 +71,6 @@ router.get(
     } else return res.json({ user: null });
   }
 );
-
-
 
 
 module.exports = router;
