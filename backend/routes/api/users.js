@@ -7,7 +7,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-// an array of validation middlewares for sign up infos 
+// an array of validation middlewares for sign up infos
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
@@ -38,7 +38,10 @@ router.post(
     const { email, password, username, firstName, lastName } = req.body;
     const user = await User.signup({ username, email, firstName, lastName, password });
 
-    await setTokenCookie(res, user);
+    const token = await setTokenCookie(res, user);
+
+    // add token to user obj as part of res
+    user.dataValues.token = token
 
     return res.json({
       user: user
