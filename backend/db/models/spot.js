@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: DataTypes.FLOAT,
-    ing: DataTypes.FLOAT,
+    lng: DataTypes.FLOAT,
     name: {
       type: DataTypes.STRING,
       allowNull: false
