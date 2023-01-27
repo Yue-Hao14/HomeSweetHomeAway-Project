@@ -1,7 +1,69 @@
 const express = require('express');
-const { Spot, SpotImage, Review, User } = require('../../db/models');
+const { Spot, SpotImage, Review, User, Booking } = require('../../db/models');
+const spot = require('../../db/models/spot');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
+
+// ------------------------------------------------------
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', restoreUser, async (req, res, _next) => {
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // find spots by spotId
+  const spotId = req.params.spotId;
+
+  // Check if current user is the owner of the spotId
+  const spot = await Spot.findByPk(spotId);
+  console.log(spot)
+
+  // if no spot found, then error message
+  // if current user is not the owner of the spot
+  // if current user is the owenr of the spot
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  } else if (spot.ownerId === userId) {
+    const Bookings = await Booking.findAll({
+      where: {
+        id: spotId
+      },
+      include: {
+        model: User,
+        attributes: {
+          exclude: ['username','email','hashedPassword','createdAt', 'updatedAt']
+        }
+      }
+    });
+    return res.json({ Bookings });
+  }else {
+    const Bookings = await Booking.findAll({
+      where: {
+        id: spotId
+      },
+      attributes: {
+        exclude: ['id','userId', 'createdAt', 'updatedAt']
+      }
+    });
+    return res.json({ Bookings });
+  }
+
+
+
+})
+
+
+
 
 // ------------------------------------------------------
 // Get details of a spot by id
@@ -200,7 +262,7 @@ router.post('/:spotid/images', restoreUser, async (req, res, _next) => {
   })
 
   // if not spots found, then error message
-  if(ownedSpots.length === 0) {
+  if (ownedSpots.length === 0) {
     return res.status(404).json({
       message: "Spot couldn't be found",
       statusCode: 404
@@ -257,28 +319,28 @@ router.post('/', restoreUser, async (req, res, _next) => {
     errors.push("Street address is required");
   };
   if (!city) {
-    errors.push("City is required") ;
+    errors.push("City is required");
   };
   if (!state) {
-    errors.push("State is required") ;
+    errors.push("State is required");
   };
   if (!country) {
-    errors.push("Country is required") ;
+    errors.push("Country is required");
   };
   if (!lat) {
-    errors.push("Latitude is required") ;
+    errors.push("Latitude is required");
   };
   if (!lng) {
-    errors.push("Longitude is required") ;
+    errors.push("Longitude is required");
   };
   if (!name || name.length > 50) {
-    errors.push("Name must be less than 50 characters") ;
+    errors.push("Name must be less than 50 characters");
   };
   if (!description) {
-    errors.push("Description is required") ;
+    errors.push("Description is required");
   };
   if (!price) {
-    errors.push("Price per day is required") ;
+    errors.push("Price per day is required");
   };
 
   error.errors = errors
@@ -286,18 +348,18 @@ router.post('/', restoreUser, async (req, res, _next) => {
     return res.status(400).json(error);
   }
 
-    const spot = await Spot.create({
-      ownerId: userId,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price
-    })
+  const spot = await Spot.create({
+    ownerId: userId,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  })
 
   const newSpot = await Spot.findOne({
     where: {
