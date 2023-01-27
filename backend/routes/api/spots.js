@@ -228,7 +228,6 @@ router.post('/:spotid/images', restoreUser, async (req, res, _next) => {
   })
 
   return res.json(newImage)
-
 })
 
 
@@ -253,42 +252,40 @@ router.post('/', restoreUser, async (req, res, _next) => {
     messages: "Validation Error",
     statusCode: 400
   }
+
+  const errors = [];
   if (!address) {
-    error.errors = "Street address is required";
-    return res.status(400).json(error)
+    errors.push("Street address is required");
   };
   if (!city) {
-    error.errors = "City is required";
-    return res.status(400).json(error)
+    errors.push("City is required") ;
   };
   if (!state) {
-    error.errors = "State is required";
-    return res.status(400).json(error)
+    errors.push("State is required") ;
   };
   if (!country) {
-    error.errors = "Country is required";
-    return res.status(400).json(error)
+    errors.push("Country is required") ;
   };
   if (!lat) {
-    error.errors = "Latitude is required";
-    return res.status(400).json(error)
+    errors.push("Latitude is required") ;
   };
   if (!lng) {
-    error.errors = "Longitude is required";
-    return res.status(400).json(error)
+    errors.push("Longitude is required") ;
   };
   if (!name || name.length > 50) {
-    error.errors = "Name must be less than 50 characters";
-    return res.status(400).json(error)
+    errors.push("Name must be less than 50 characters") ;
   };
   if (!description) {
-    error.errors = "Description is required";
-    return res.status(400).json(error)
+    errors.push("Description is required") ;
   };
   if (!price) {
-    error.errors = "Price per day is required";
-    return res.status(400).json(error)
+    errors.push("Price per day is required") ;
   };
+
+  error.errors = errors
+  if (errors.length > 0) {
+    return res.status(400).json(error);
+  }
 
     const spot = await Spot.create({
       ownerId: userId,
