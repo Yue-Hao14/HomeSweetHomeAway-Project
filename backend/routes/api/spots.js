@@ -176,6 +176,63 @@ router.get('/', async (req, res, _next) => {
 
 
 // ------------------------------------------------------
+// Add an Image to a Spot based on the Spot's id
+router.post('/:spotid/images', restoreUser, async (req, res, _next) => {
+  // extract logged in/current user object (promise) from restoreUser middleware output
+  const { user } = req;
+
+  // convert user object to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // extract spotId
+  const spotId = req.params.spotid;
+
+  // find all the spots owned by the current user
+  const ownedSpots = await Spot.findAll({
+    where: {
+      ownerId: userId,
+      id: spotId
+    }
+  })
+
+  // if not spots found, then error message
+  if(ownedSpots.length === 0) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  // extract url and preview from res.body
+  const { url, preview } = req.body;
+
+  // add image to SpotImages table
+  const image = await SpotImage.create({
+    spotId,
+    url,
+    preview
+  })
+
+  const newImage = await SpotImage.findOne({
+    where: {
+      url: url
+    },
+    attributes: {
+      exclude: ['spotId']
+    }
+  })
+
+  return res.json(newImage)
+
+})
+
+
+// ------------------------------------------------------
 // Create a spot
 router.post('/', restoreUser, async (req, res, _next) => {
   // extract user object (promise) from restoreUser middleware output
