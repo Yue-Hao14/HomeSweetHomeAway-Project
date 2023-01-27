@@ -43,7 +43,7 @@ module.exports = {
       lat: {
         type: Sequelize.FLOAT
       },
-      ing: {
+      lng: {
         type: Sequelize.FLOAT
       },
       name: {
