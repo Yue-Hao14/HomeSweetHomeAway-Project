@@ -35,7 +35,6 @@ router.get('/:spotId', async (req, res, _next) => {
     })
   }
 
-
   const spotPOJO = spot.toJSON();
   // console.log(spotPOJO)
 
