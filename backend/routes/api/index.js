@@ -2,7 +2,8 @@
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
-const spotsRouter = require('./spots.js')
+const spotsRouter = require('./spots.js');
+const bookingsRouter = require('./bookings.js')
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -13,6 +14,7 @@ router.use(restoreUser);
 router.use('/session', sessionRouter); // log in and log out routers
 router.use('/users', usersRouter); // user sign up routers
 router.use('/spots', spotsRouter); // spot router
+router.use('/bookings', bookingsRouter); // booking router
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
