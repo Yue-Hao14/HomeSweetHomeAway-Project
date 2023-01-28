@@ -41,18 +41,18 @@ router.get('/:spotId/bookings', restoreUser, async (req, res, _next) => {
       include: {
         model: User,
         attributes: {
-          exclude: ['username','email','hashedPassword','createdAt', 'updatedAt']
+          exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
         }
       }
     });
     return res.json({ Bookings });
-  }else {
+  } else {
     const Bookings = await Booking.findAll({
       where: {
         id: spotId
       },
       attributes: {
-        exclude: ['id','userId', 'createdAt', 'updatedAt']
+        exclude: ['id', 'userId', 'createdAt', 'updatedAt']
       }
     });
     return res.json({ Bookings });
@@ -60,62 +60,6 @@ router.get('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
 
 
-})
-
-
-
-
-// ------------------------------------------------------
-// Get details of a spot by id
-router.get('/:spotId', async (req, res, _next) => {
-
-  // find spots by spotId
-  const spotId = req.params.spotId;
-
-  const spot = await Spot.findByPk(spotId, {
-    include: [{
-      model: SpotImage,
-      attributes: {
-        exclude: ['spotId', 'createdAt', 'updatedAt']
-      }
-    }, {
-      model: User,
-      as: 'Owner',
-      attributes: {
-        exclude: ['email', 'hashedPassword', 'username', 'createdAt', 'updatedAt']
-      }
-    }, Review]
-  })
-
-  // if no spot found in db
-  // console.log(spot)
-  if (!spot) {
-    return res.status(404).json({
-      message: "Spot couldn't be found",
-      statusCode: 404
-    })
-  }
-
-  const spotPOJO = spot.toJSON();
-  // console.log(spotPOJO)
-
-  // iterate through Reviews array to get numReviews and avgStarRating
-  const reviewsArr = spotPOJO.Reviews;
-  // console.log(reviewsArr)
-
-  let numReviews = 0;
-  let totalRating = 0;
-  reviewsArr.forEach(review => {
-    numReviews++;
-    totalRating += review.stars
-  });
-  const avgStarRating = totalRating / numReviews;
-  spotPOJO.numReviews = numReviews;
-  spotPOJO.avgStarRating = avgStarRating;
-
-  delete spotPOJO.Reviews;
-
-  return res.json(spotPOJO);
 })
 
 
@@ -183,6 +127,64 @@ router.get('/current', restoreUser, async (req, res, _next) => {
   return res.json(result)
 
 })
+
+
+
+// ------------------------------------------------------
+// Get details of a spot by id
+router.get('/:spotId', async (req, res, _next) => {
+
+  // find spots by spotId
+  const spotId = req.params.spotId;
+
+  const spot = await Spot.findByPk(spotId, {
+    include: [{
+      model: SpotImage,
+      attributes: {
+        exclude: ['spotId', 'createdAt', 'updatedAt']
+      }
+    }, {
+      model: User,
+      as: 'Owner',
+      attributes: {
+        exclude: ['email', 'hashedPassword', 'username', 'createdAt', 'updatedAt']
+      }
+    }, Review]
+  })
+
+  // if no spot found in db
+  // console.log(spot)
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  const spotPOJO = spot.toJSON();
+  // console.log(spotPOJO)
+
+  // iterate through Reviews array to get numReviews and avgStarRating
+  const reviewsArr = spotPOJO.Reviews;
+  // console.log(reviewsArr)
+
+  let numReviews = 0;
+  let totalRating = 0;
+  reviewsArr.forEach(review => {
+    numReviews++;
+    totalRating += review.stars
+  });
+  const avgStarRating = totalRating / numReviews;
+  spotPOJO.numReviews = numReviews;
+  spotPOJO.avgStarRating = avgStarRating;
+
+  delete spotPOJO.Reviews;
+
+  return res.json(spotPOJO);
+})
+
+
+
 
 
 // ------------------------------------------------------
@@ -340,7 +342,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
   }
 
   // if current user is the owner of the spot, then error message
-  if(spot.ownerId === userId) {
+  if (spot.ownerId === userId) {
     return res.status(404).json({
       message: "Owner cannot create booking for your own property",
       statusCode: 404
@@ -363,21 +365,21 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
 
   // filter for bookings that has the same month and next month and year of this new booking
-  let currentMonthBooking = [];
-  let nextMonthBooking = [];
-  spotBookingsArr.forEach( existingBooking => {
+  let currentMonthBookings = [];
+  let nextMonthBookings = [];
+  spotBookingsArr.forEach(existingBooking => {
     existingBooking = existingBooking.toJSON();
 
     let bookingStartDate = existingBooking.startDate
-    bookingStartDate = new Date (bookingStartDate)
+    bookingStartDate = new Date(bookingStartDate)
     let bookingEndDate = existingBooking.endDate
-    bookingEndDate = new Date (bookingEndDate)
+    bookingEndDate = new Date(bookingEndDate)
     let bookingMonth = bookingStartDate.getMonth();
     let bookingYear = bookingStartDate.getFullYear();
 
     // push same month booking to array
     if (bookingMonth === currentMonth && bookingYear === currentYear) {
-      currentMonthBooking.push({
+      currentMonthBookings.push({
         startDate: bookingStartDate,
         endDate: bookingEndDate
       })
@@ -385,31 +387,149 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
     // push same month booking to array
     if (bookingMonth === (currentMonth + 1) && bookingYear === currentYear) {
-      nextMonthBooking.push({
+      nextMonthBookings.push({
         startDate: bookingStartDate,
         endDate: bookingEndDate
       })
     }
   });
 
-  // console.log(currentMonthBooking)
-  // console.log(nextMonthBooking)
-
-
-  // compare existing same month booking with this new one
-    // 1. if new startDate before earliest existing startDate, check if new endDate
-    // is before earlist existing startDate
-    // 2. if new startDate behind latest existing endDate, check if new endDate
-    // is before next month's earliest existing startDate
-    // 3. if new startDate is in between ealiest existing startDate and latest existing endDate,
-    // iterate through existing same month's bookings
-      // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
-      // if new startDate later than existing startDate but earlier than existing endDate, error
-      // move on to check next booking
-      // once all same month's booking has checked against new booking
-      // go on to successful booking response
+  console.log(currentMonthBookings)
+  // console.log(nextMonthBookings)
 
   // edge case: if new booking across 2 years, then take existing Dec and Jan of next yr's bookings to compare
+
+
+  // iterate through existing same month's bookings
+  // compare existing same month booking with this new one
+  currentMonthBookings.forEach(booking => {
+    // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
+    if (startDate.getTime() < booking.startDate.getTime() &&
+    endDate.getTime() >= booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate equal to existing startDate, error
+    if (startDate.getTime() === booking.startDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking"
+        ]
+      })
+    };
+    
+    // if new startDate later than existing start and new endDate earlier than existing end, error on both
+    if (startDate.getTime() > booking.startDate.getTime() &&
+    endDate.getTime() < booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking",
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate later than existing startDate but earlier than existing endDate, error
+    if (startDate.getTime() > booking.startDate.getTime() &&
+    startDate.getTime() < booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
+    if (startDate.getTime() < booking.startDate.getTime() &&
+    endDate.getTime() > booking.startDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+
+  });
+
+
+  // once all same month's booking has checked against new booking, move on to check next booking
+  nextMonthBookings.forEach(booking => {
+    // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
+    if (startDate.getTime() < booking.startDate.getTime() &&
+      endDate.getTime() >= booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate equal to existing startDate, error
+    if (startDate.getTime() = booking.startDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate later than existing startDate but earlier than existing endDate, error
+    if (startDate.getTime() > booking.startDate.getTime() &&
+      startDate.getTime() < booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
+    if (startDate.getTime() < booking.startDate.getTime() &&
+      endDate.getTime() > booking.startDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+
+    // if new startDate later than existing start and new endDate earlier than existing end, error on both
+    if (startDate.getTime() > booking.startDate.getTime() &&
+      endDate.getTime() < booking.endDate.getTime()) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: [
+          "Start date conflicts with an existing booking",
+          "End date conflicts with an existing booking"
+        ]
+      })
+    };
+  });
+
+
 
 
 
@@ -426,9 +546,9 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
   const bookingFromDB = await Booking.findOne({
     where: {
       spotId: spotId,
-    userId: userId,
-    startDate: startDate,
-    endDate: endDate
+      userId: userId,
+      startDate: startDate,
+      endDate: endDate
     }
   })
 
