@@ -732,4 +732,50 @@ router.put('/:spotId', restoreUser, async (req, res, _next) => {
 })
 
 
+// ------------------------------------------------------
+// Delete a Spot
+router.delete('/:spotId', restoreUser, async (req, res, _next) => {
+  const spotId = req.params.spotId;
+
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // find spot by spotId
+  let spot = await Spot.findByPk(spotId);
+
+  // if no spot is found based on spotId, error
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+  // convert to normal POJO
+  spot = spot.toJSON();
+
+  // check if current user owns this spot, if not, error
+  if (spot.ownerId !== userId) {
+    return res.status(404).json({
+      message: "This is not your spot."
+    })
+  }
+
+  // delete a spot
+  const spotObj = await Spot.findByPk(spotId);
+  spotObj.destroy();
+
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: 200
+  })
+
+
+})
+
 module.exports = router;
