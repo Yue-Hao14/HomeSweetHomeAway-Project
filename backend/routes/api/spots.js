@@ -73,7 +73,7 @@ router.get('/current', restoreUser, async (req, res, _next) => {
 
 // ------------------------------------------------------
 // Get all Reviews for a Spot based on the Spot's id
-router.get('/:spotId/reviews', async (req,res,_next) => {
+router.get('/:spotId/reviews', async (req, res, _next) => {
   let result = {};
   const spotId = req.params.spotId;
 
@@ -94,12 +94,12 @@ router.get('/:spotId/reviews', async (req,res,_next) => {
     include: [{
       model: User,
       attributes: {
-        exclude: ['username','hashedPassword','email','createdAt','updatedAt',]
+        exclude: ['username', 'hashedPassword', 'email', 'createdAt', 'updatedAt',]
       }
-    },{
+    }, {
       model: ReviewImage,
       attributes: {
-        exclude: ['reviewId','createdAt', 'updatedAt']
+        exclude: ['reviewId', 'createdAt', 'updatedAt']
       }
     }]
   })
@@ -335,6 +335,78 @@ router.post('/:spotid/images', restoreUser, async (req, res, _next) => {
 
 
 // ------------------------------------------------------
+// Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', restoreUser, async (req, res, _next) => {
+  const spotId = req.params.spotId
+  const { review, stars } = req.body;
+
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // check if a spot can be found, if not, error
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  // req.body validation checks
+  const error = {
+    messages: "Validation Error",
+    statusCode: 400
+  }
+  const errors = [];
+  if (!review) {
+    errors.push("Review text is required");
+  };
+  if (typeof stars !== "number" || stars < 1 || stars > 5) {
+    errors.push("Stars must be an integer from 1 to 5");
+  };
+  error.errors = errors
+  if (errors.length > 0) {
+    return res.status(400).json(error);
+  }
+
+  // check if current user has already left a review for this spot
+  const existingReview = await Review.findOne({
+    where: {
+      spotId: spotId,
+      userId: userId
+    }
+  })
+  if (existingReview) {
+    return res.status(403).json({
+      message: "User already has a review for this spot",
+      statusCode: 403
+    })
+  }
+
+  const newReview = await Review.create({
+    spotId,
+    userId,
+    review,
+    stars
+  });
+
+  const reviewFromDB = await Review.findOne({
+    where: {
+      review: review
+    }
+  });
+
+  return res.json(reviewFromDB);
+})
+
+
+// ------------------------------------------------------
 // Create a Booking for a Spot based on the Spot's id
 router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
   // get spotId
@@ -446,7 +518,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
   currentMonthBookings.forEach(booking => {
     // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
     if (startDate.getTime() < booking.startDate.getTime() &&
-    endDate.getTime() >= booking.endDate.getTime()) {
+      endDate.getTime() >= booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -469,7 +541,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
     // if new startDate later than existing start and new endDate earlier than existing end, error on both
     if (startDate.getTime() > booking.startDate.getTime() &&
-    endDate.getTime() < booking.endDate.getTime()) {
+      endDate.getTime() < booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -482,7 +554,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
     // if new startDate later than existing startDate but earlier than existing endDate, error
     if (startDate.getTime() > booking.startDate.getTime() &&
-    startDate.getTime() < booking.endDate.getTime()) {
+      startDate.getTime() < booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -494,7 +566,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
     // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
     if (startDate.getTime() < booking.startDate.getTime() &&
-    endDate.getTime() > booking.startDate.getTime()) {
+      endDate.getTime() > booking.startDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
