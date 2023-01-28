@@ -178,7 +178,7 @@ router.put('/:bookingId', restoreUser, async (req, res, _next) => {
   currentMonthBookings.forEach(booking => {
     // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
     if (startDate.getTime() < booking.startDate.getTime() &&
-    endDate.getTime() >= booking.endDate.getTime()) {
+      endDate.getTime() >= booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -201,7 +201,7 @@ router.put('/:bookingId', restoreUser, async (req, res, _next) => {
 
     // if new startDate later than existing start and new endDate earlier than existing end, error on both
     if (startDate.getTime() > booking.startDate.getTime() &&
-    endDate.getTime() < booking.endDate.getTime()) {
+      endDate.getTime() < booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -214,7 +214,7 @@ router.put('/:bookingId', restoreUser, async (req, res, _next) => {
 
     // if new startDate later than existing startDate but earlier than existing endDate, error
     if (startDate.getTime() > booking.startDate.getTime() &&
-    startDate.getTime() < booking.endDate.getTime()) {
+      startDate.getTime() < booking.endDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -226,7 +226,7 @@ router.put('/:bookingId', restoreUser, async (req, res, _next) => {
 
     // if new startDate earlier than existing startDate but new endDate later than existing startDate, error
     if (startDate.getTime() < booking.startDate.getTime() &&
-    endDate.getTime() > booking.startDate.getTime()) {
+      endDate.getTime() > booking.startDate.getTime()) {
       return res.status(403).json({
         message: "Sorry, this spot is already booked for the specified dates",
         statusCode: 403,
@@ -314,6 +314,71 @@ router.put('/:bookingId', restoreUser, async (req, res, _next) => {
   return res.json(updatedBooking);
 })
 
+
+// ------------------------------------------------------
+// Delete a Booking
+router.delete('/:bookingId', restoreUser, async (req, res, _next) => {
+  const bookingId = req.params.bookingId;
+
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // find booking by bookingId
+  let booking = await Booking.findByPk(bookingId);
+
+  // if no booking is found based on bookingId, error
+  if (!booking) {
+    return res.status(404).json({
+      message: "Booking couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  // convert to normal POJO
+  booking = booking.toJSON();
+
+  // check if current user owns this booking and current user is the owner of the spot,
+  // if not, error
+  // find ownerId of the spot associated to this booking
+  const spotId = booking.spotId;
+  let spot = await Spot.findByPk(spotId);
+  spot = spot.toJSON();
+  if (booking.userId !== userId && userId !== spot.ownerId) {
+    return res.status(404).json({
+      message: "You do not have proper permission to delete this booking"
+    })
+  }
+
+
+  // check if booking has already started
+  // get startDate of the booking and convert to a Date
+  let startDate = booking.startDate;
+  startDate = new Date(startDate);
+  // compare startDate vs. today, if startDate earlier than or equal to today, error
+  const today = new Date();
+  if (startDate.getTime() <= today.getTime()) {
+    return res.status(403).json({
+      message: "Bookings that have been started can't be deleted",
+      statusCode: 403
+    })
+  }
+
+  // delete booking
+  const bookingObj = await Booking.findByPk(bookingId);
+  bookingObj.destroy();
+
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: 200
+  })
+
+})
 
 
 module.exports = router;
