@@ -531,10 +531,6 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
 
 
 
-
-
-
-
   // create booking
   const booking = await Booking.create({
     spotId,
@@ -634,6 +630,105 @@ router.post('/', restoreUser, async (req, res, _next) => {
   })
 
   return res.json(newSpot)
+})
+
+
+// ------------------------------------------------------
+// Edit a Spot
+router.put('/:spotId', restoreUser, async (req, res, _next) => {
+  const spotId = req.params.spotId;
+
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // find spot by spotId
+  let spot = await Spot.findByPk(spotId);
+
+  // if no spot is found based on spotId, error
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+  // convert to normal POJO
+  spot = spot.toJSON();
+
+  // check if current user owns this spot, if not, error
+  if (spot.ownerId !== userId) {
+    return res.status(404).json({
+      message: "This is not your spot."
+    })
+  }
+
+
+  // Body validaiton error
+  // extract from req.body
+  const { address, city, state, country, lat, lng, name, description, price } = req.body
+  // error messages
+  const error = {
+    messages: "Validation Error",
+    statusCode: 400
+  }
+  const errors = [];
+  if (!address) {
+    errors.push("Street address is required");
+  };
+  if (!city) {
+    errors.push("City is required");
+  };
+  if (!state) {
+    errors.push("State is required");
+  };
+  if (!country) {
+    errors.push("Country is required");
+  };
+  if (!lat) {
+    errors.push("Latitude is required");
+  };
+  if (!lng) {
+    errors.push("Longitude is required");
+  };
+  if (!name || name.length > 50) {
+    errors.push("Name must be less than 50 characters");
+  };
+  if (!description) {
+    errors.push("Description is required");
+  };
+  if (!price) {
+    errors.push("Price per day is required");
+  };
+  // assign errors to the error object
+  error.errors = errors
+  // return error response
+  if (errors.length > 0) {
+    return res.status(400).json(error);
+  }
+
+
+  // update spot
+  const spotObj = await Spot.findByPk(spotId);
+  await spotObj.update({
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  })
+
+  const updatedSpot = await Spot.findByPk(spotId);
+
+  return res.json(updatedSpot);
 })
 
 
