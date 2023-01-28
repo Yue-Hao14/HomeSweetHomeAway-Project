@@ -25,7 +25,7 @@ router.get('/current', restoreUser, async (req, res, _next) => {
     include: {
       model: Spot,
       attributes: {
-        exclude: ['createdAt', 'UpdatedAt']
+        exclude: ['createdAt', 'updatedAt']
       },
       include: SpotImage
     }
