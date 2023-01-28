@@ -1,68 +1,8 @@
 const express = require('express');
-const { Spot, SpotImage, Review, User, Booking } = require('../../db/models');
+const { Spot, SpotImage, Review, User, Booking, ReviewImage } = require('../../db/models');
 const spot = require('../../db/models/spot');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
-
-// ------------------------------------------------------
-// Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', restoreUser, async (req, res, _next) => {
-  // extract user object (promise) from restoreUser middleware output
-  const { user } = req;
-
-  // convert user to normal POJO
-  const userPOJO = user.toJSON();
-  // console.log(userPOJO)
-
-  // get userId of the current user
-  const userId = userPOJO.id
-  // console.log(userId);
-
-  // find spots by spotId
-  const spotId = req.params.spotId;
-
-  // Check if current user is the owner of the spotId
-  const spot = await Spot.findByPk(spotId);
-  console.log(spot)
-
-  // if no spot found, then error message
-  // if current user is not the owner of the spot
-  // if current user is the owenr of the spot
-  if (!spot) {
-    return res.status(404).json({
-      message: "Spot couldn't be found",
-      statusCode: 404
-    })
-  } else if (spot.ownerId === userId) {
-    const Bookings = await Booking.findAll({
-      where: {
-        id: spotId
-      },
-      include: {
-        model: User,
-        attributes: {
-          exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
-        }
-      }
-    });
-    return res.json({ Bookings });
-  } else {
-    const Bookings = await Booking.findAll({
-      where: {
-        id: spotId
-      },
-      attributes: {
-        exclude: ['id', 'userId', 'createdAt', 'updatedAt']
-      }
-    });
-    return res.json({ Bookings });
-  }
-
-
-
-})
-
-
 
 // ------------------------------------------------------
 // Get spots of current user
@@ -130,6 +70,108 @@ router.get('/current', restoreUser, async (req, res, _next) => {
 
 
 
+
+// ------------------------------------------------------
+// Get all Reviews for a Spot based on the Spot's id
+router.get('/:spotId/reviews', async (req,res,_next) => {
+  let result = {};
+  const spotId = req.params.spotId;
+
+  // check if a spot can be found based on spotId
+  const spot = await Spot.findByPk(spotId)
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  // get all the reviews for this spotId
+  const reviews = await Review.findAll({
+    where: {
+      spotId: spotId
+    },
+    include: [{
+      model: User,
+      attributes: {
+        exclude: ['username','hashedPassword','email','createdAt','updatedAt',]
+      }
+    },{
+      model: ReviewImage,
+      attributes: {
+        exclude: ['reviewId','createdAt', 'updatedAt']
+      }
+    }]
+  })
+
+  result.Reviews = reviews;
+  return res.json(result);
+})
+
+
+
+
+// ------------------------------------------------------
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', restoreUser, async (req, res, _next) => {
+  // extract user object (promise) from restoreUser middleware output
+  const { user } = req;
+
+  // convert user to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+  // find spots by spotId
+  const spotId = req.params.spotId;
+
+  // Check if current user is the owner of the spotId
+  const spot = await Spot.findByPk(spotId);
+  // console.log(spot)
+
+  // if no spot found, then error message
+  // if current user is not the owner of the spot
+  // if current user is the owenr of the spot
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  } else if (spot.ownerId === userId) {
+    const Bookings = await Booking.findAll({
+      where: {
+        id: spotId
+      },
+      include: {
+        model: User,
+        attributes: {
+          exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
+        }
+      }
+    });
+    return res.json({ Bookings });
+  } else {
+    const Bookings = await Booking.findAll({
+      where: {
+        id: spotId
+      },
+      attributes: {
+        exclude: ['id', 'userId', 'createdAt', 'updatedAt']
+      }
+    });
+    return res.json({ Bookings });
+  }
+
+
+
+})
+
+
+
+
 // ------------------------------------------------------
 // Get details of a spot by id
 router.get('/:spotId', async (req, res, _next) => {
@@ -182,7 +224,6 @@ router.get('/:spotId', async (req, res, _next) => {
 
   return res.json(spotPOJO);
 })
-
 
 
 
