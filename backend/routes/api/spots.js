@@ -394,7 +394,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
     }
   });
 
-  console.log(currentMonthBookings)
+  // console.log(currentMonthBookings)
   // console.log(nextMonthBookings)
 
   // edge case: if new booking across 2 years, then take existing Dec and Jan of next yr's bookings to compare
@@ -425,7 +425,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
         ]
       })
     };
-    
+
     // if new startDate later than existing start and new endDate earlier than existing end, error on both
     if (startDate.getTime() > booking.startDate.getTime() &&
     endDate.getTime() < booking.endDate.getTime()) {
