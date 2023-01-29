@@ -51,13 +51,15 @@ router.delete('/:spotImageId', restoreUser, async (req, res, _next) => {
 
 // get the spotId associated to the spotImage requested
 let spotId = await SpotImage.findByPk(spotImageId)
-spotId = spotId.dataValues.id;
-console.log(spotId)
+spotId = spotId.dataValues.spotId;
+// console.log(spotId)
 
 
+// check if the spot associated to this spot image is part of the ownedSpotIdArr
+// if no, error
  if (!ownedSpotIdArr.includes(spotId)) {
    return res.status(404).json({
-     message: "You don't have permission to delete this review",
+     message: "You don't have permission to delete this image",
      statusCode: 404
    })
  }
