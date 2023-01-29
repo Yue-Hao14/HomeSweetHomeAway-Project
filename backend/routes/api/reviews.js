@@ -27,9 +27,9 @@ router.get('/current', restoreUser, async (req, res, _next) => {
     include: [{
       model: User,
       attributes: {
-        exclude: ['username','hashedPassword','email','createdAt','updatedAt',]
+        exclude: ['username', 'hashedPassword', 'email', 'createdAt', 'updatedAt',]
       }
-    },{
+    }, {
       model: Spot,
       attributes: {
         exclude: ['createdAt', 'updatedAt']
@@ -38,7 +38,7 @@ router.get('/current', restoreUser, async (req, res, _next) => {
     }, {
       model: ReviewImage,
       attributes: {
-        exclude: ['reviewId','createdAt', 'updatedAt']
+        exclude: ['reviewId', 'createdAt', 'updatedAt']
       }
     }]
   })
@@ -146,11 +146,85 @@ router.post('/:reviewId/images', restoreUser, async (req, res, _next) => {
       url: url
     },
     attributes: {
-      exclude: ['reviewId','createdAt','updatedAt']
+      exclude: ['reviewId', 'createdAt', 'updatedAt']
     }
   })
 
   return res.json(newImage);
+})
+
+// ------------------------------------------------------
+// Edit a review
+router.put('/:reviewId', restoreUser, async (req, res, _next) => {
+  const reviewId = req.params.reviewId;
+  const { review, stars } = req.body;
+
+  // extract logged in/current user object (promise) from restoreUser middleware output
+  const { user } = req;
+  // convert user object to normal POJO
+  const userPOJO = user.toJSON();
+  // console.log(userPOJO)
+  // get userId of the current user
+  const userId = userPOJO.id
+  // console.log(userId);
+
+
+  // check if a review can be found, if not, error
+  const existingReview = await Review.findOne({
+    where: {
+      id: reviewId
+    }
+  })
+  if (!existingReview) {
+    return res.status(404).json({
+      message: "Review couldn't be found",
+      statusCode: 404
+    })
+  }
+
+
+  // req.body validation checks
+  const error = {
+    messages: "Validation Error",
+    statusCode: 400
+  }
+  const errors = [];
+  if (!review) {
+    errors.push("Review text is required");
+  };
+  if (typeof stars !== "number" || stars < 1 || stars > 5) {
+    errors.push("Stars must be an integer from 1 to 5");
+  };
+  error.errors = errors
+  if (errors.length > 0) {
+    return res.status(400).json(error);
+  }
+
+
+  // check if review belongs to the current user, if not, error
+  const reviewOfUser = await Review.findOne({
+    where: {
+      userId: userId,
+      id: reviewId
+    }
+  })
+  if (!reviewOfUser) {
+    return res.status(404).json({
+      message: "You don't have permission to add an image for this review",
+      statusCode: 404
+    })
+  }
+
+
+  // update existing review
+  await existingReview.update({
+    review: review,
+    stars: stars
+  })
+
+  const updatedReview = await Review.findByPk(reviewId);
+
+  return res.json(updatedReview)
 })
 
 
