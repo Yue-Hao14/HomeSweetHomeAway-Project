@@ -814,7 +814,13 @@ router.post('/', restoreUser, async (req, res, _next) => {
 
   const newSpot = await Spot.findOne({
     where: {
-      name: name
+      name: name,
+      ownerId: userId,
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      description: description,
     }
   })
 
