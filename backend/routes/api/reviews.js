@@ -191,7 +191,7 @@ router.put('/:reviewId', restoreUser, async (req, res, _next) => {
   if (!review) {
     errors.push("Review text is required");
   };
-  if (typeof stars !== "number" || stars < 1 || stars > 5) {
+  if (!Number.isInteger(stars) || stars < 1 || stars > 5) {
     errors.push("Stars must be an integer from 1 to 5");
   };
   error.errors = errors
