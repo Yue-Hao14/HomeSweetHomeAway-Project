@@ -141,10 +141,7 @@ router.post('/:reviewId/images', restoreUser, async (req, res, _next) => {
     url
   })
 
-  const newImage = await ReviewImage.findOne({
-    where: {
-      url: url
-    },
+  const newImage = await ReviewImage.findByPk(image.dataValues.id,{
     attributes: {
       exclude: ['reviewId', 'createdAt', 'updatedAt']
     }

@@ -397,10 +397,7 @@ router.post('/:spotid/images', restoreUser, async (req, res, _next) => {
     preview
   })
 
-  const newImage = await SpotImage.findOne({
-    where: {
-      url: url
-    },
+  const newImage = await SpotImage.findByPk(image.dataValues.id,{
     attributes: {
       exclude: ['spotId']
     }
@@ -472,11 +469,7 @@ router.post('/:spotId/reviews', restoreUser, async (req, res, _next) => {
     stars
   });
 
-  const reviewFromDB = await Review.findOne({
-    where: {
-      review: review
-    }
-  });
+  const reviewFromDB = await Review.findByPk(newReview.dataValues.id)
 
   return res.json(reviewFromDB);
 })
@@ -728,16 +721,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res, _next) => {
     endDate
   })
 
-  const bookingFromDB = await Booking.findOne({
-    where: {
-      spotId: spotId,
-      userId: userId,
-      startDate: startDate,
-      endDate: endDate
-    }
-  })
-
-
+  const bookingFromDB = await Booking.findByPk(booking.dataValues.id)
 
   return res.json(bookingFromDB)
 })
