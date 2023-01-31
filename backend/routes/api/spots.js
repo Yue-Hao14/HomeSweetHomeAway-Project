@@ -812,17 +812,11 @@ router.post('/', restoreUser, async (req, res, _next) => {
     price
   })
 
-  const newSpot = await Spot.findOne({
-    where: {
-      name: name,
-      ownerId: userId,
-      address: address,
-      city: city,
-      state: state,
-      country: country,
-      description: description,
-    }
-  })
+  console.log(spot.dataValues.id)
+  const spotId = spot.dataValues.id;
+  console.log(spotId)
+
+  const newSpot = await Spot.findByPk(spotId)
 
   return res.json(newSpot)
 })
