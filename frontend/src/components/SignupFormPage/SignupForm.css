@@ -1,0 +1,13 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  display: inline-flex;
+}
+
+.signup-form > label >input {
+  margin: 2px 6px
+}
+
+button {
+  margin: 2px
+}
