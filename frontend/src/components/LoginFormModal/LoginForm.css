@@ -1,0 +1,13 @@
+.login-form > label > input {
+  margin: 4px 6px;
+}
+
+.login-form > button {
+  margin: 6px ;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  display: inline-flex;
+}
