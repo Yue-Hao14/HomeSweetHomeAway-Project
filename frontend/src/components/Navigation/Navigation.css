@@ -7,6 +7,6 @@ ul {
   justify-content: space-between;
 }
 
-.logo > i {
+.logo > span {
   padding: 0 10px;
 }
