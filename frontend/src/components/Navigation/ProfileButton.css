@@ -9,4 +9,9 @@
   flex-direction: column;
 }
 
-
+.profile-button {
+  font-size: 30px;
+  border:0cm;
+  background-color: white;
+  color: rgb(131, 131, 131);
+}

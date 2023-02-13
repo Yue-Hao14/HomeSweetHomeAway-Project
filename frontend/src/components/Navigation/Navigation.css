@@ -1,7 +1,3 @@
-li > a {
-  margin: 6px
-}
-
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -9,4 +5,11 @@ li > a {
 
 .logo > span {
   padding: 0 10px;
+  font-size: x-large;
+  color:rgb(242, 87, 31);
+}
+
+.logo > a > i {
+  color:rgb(242, 87, 31);
+  font-size: 20px;
 }
