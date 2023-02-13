@@ -46,9 +46,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Root />
-  </React.StrictMode>,
-  document.getElementById('root')
-);

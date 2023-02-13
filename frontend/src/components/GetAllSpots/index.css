@@ -1,0 +1,40 @@
+.all-spots {
+ display: inline-flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+}
+
+.spot-card {
+  display: flex;
+  flex-direction: column;
+  width: 23%;
+  margin: 1%;
+}
+
+.clickable-card {
+  text-decoration: none;
+  color: black;
+}
+.spot-preview {
+  width: 270px;
+  height: 250px;
+}
+
+.city-state-rating {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 270px;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating > div {
+  margin: 2px;
+}
+
+.price {
+  font-weight: bold;
+}
