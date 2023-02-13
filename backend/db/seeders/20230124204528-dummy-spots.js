@@ -47,6 +47,24 @@ module.exports = {
       name: '333',
       price: 300
     },
+    {
+      ownerId: 1,
+      address: '444 Road',
+      city: 'New York',
+      state: 'NY',
+      country: 'USA',
+      name: '444',
+      price: 400
+    },
+    {
+      ownerId: 2,
+      address: '555 Road',
+      city: 'New York',
+      state: 'NY',
+      country: 'USA',
+      name: '555',
+      price: 500
+    },
    ])
   },
 
