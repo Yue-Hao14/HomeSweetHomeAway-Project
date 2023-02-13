@@ -60,8 +60,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit"
-          disabled={errors.length > 0 ||
-            credential.length < 4 ||
+          disabled={credential.length < 4 ||
             password.length < 6}>
           Log In
         </button>
