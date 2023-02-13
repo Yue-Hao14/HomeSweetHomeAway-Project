@@ -2,11 +2,11 @@ li > a {
   margin: 6px
 }
 
-ul {
+.navigation {
   display: flex;
   justify-content: space-between;
 }
 
-.logo > i {
+.logo > span {
   padding: 0 10px;
 }

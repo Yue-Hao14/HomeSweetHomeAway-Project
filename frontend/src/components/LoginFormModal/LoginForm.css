@@ -1,13 +1,38 @@
 .login-form > label > input {
-  margin: 4px 6px;
+  margin: 4px ;
+  border: 2px solid black;
+  background-color: rgb(210, 226, 248);
 }
 
 .login-form > button {
   margin: 6px ;
+  height: 50px;
+  box-shadow: 3px 3px 2px grey ;
+  border: 2px solid grey;
 }
 
 .login-form {
-  display: flex;
   flex-direction: column;
   display: inline-flex;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+.login-form > label {
+  display: inline-flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+#modal-content {
+  padding: 15px;
+  border-radius: 20px;
+}
+
+a {
+  margin: 6px auto;
+  color: rgb(0, 96, 96);
 }
