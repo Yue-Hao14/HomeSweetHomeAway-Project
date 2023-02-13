@@ -2,7 +2,7 @@ li > a {
   margin: 6px
 }
 
-ul {
+.navigation {
   display: flex;
   justify-content: space-between;
 }

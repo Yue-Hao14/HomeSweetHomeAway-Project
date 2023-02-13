@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
-const bcrypt = require("bcryptjs");
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -62,8 +61,8 @@ function LoginFormModal() {
         </label>
         <button type="submit"
           disabled={errors.length > 0 ||
-            credential.length <= 4 ||
-            password.length <= 6}>
+            credential.length < 4 ||
+            password.length < 6}>
           Log In
         </button>
         <a href="button" onClick={handleDemoUser}>Demo User</a>
