@@ -49,8 +49,8 @@ function GetSingleSpot() {
             <div className='price'>${singleSpot.price} night</div>
             <div className='rating-review'>
               <i class="fa-solid fa-star"></i>
-              {Number(singleSpot.avgStarRating).toFixed(2)} -
-              {singleSpot.numReviews} {singleSpot.numReviews === 1? "review" : "reviews"}
+              {Number(singleSpot.avgStarRating).toFixed(2)}
+              {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews," ",singleSpot.numReviews === 1? "review" : "reviews")}
             </div>
           </div>
           <button onClick={handleClick}>Reserve</button>
