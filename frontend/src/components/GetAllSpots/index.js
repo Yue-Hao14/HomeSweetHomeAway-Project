@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as spotActions from "../../store/spots";
 import { useEffect } from 'react';
-import './index.css';
+import './GetAllSpots.css';
 
 function GetAllSpots() {
   const dispatch = useDispatch();
