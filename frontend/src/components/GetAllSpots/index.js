@@ -21,6 +21,7 @@ function GetAllSpots() {
             <div className='spot-card'>
                 <a className='clickable-card' href={`/spots/${spot.id}`}>
                 <img className="spot-preview" src={spot.previewImage} alt="spot preview"></img>
+                  <div>{spot.name}</div>
                 <div className="city-state-rating">
                   <div>{spot.city}, {spot.state}</div>
                   <div className='rating'>

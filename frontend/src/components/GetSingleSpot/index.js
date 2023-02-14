@@ -15,10 +15,14 @@ function GetSingleSpot() {
   }, [dispatch]);
 
   const singleSpot = useSelector((store) => store.spots.singleSpot)
-  // console.log('singleSpot in GetSingleSpot component', singleSpot)
+  console.log('singleSpot in GetSingleSpot component', singleSpot)
 
   // console.log("image url",singleSpot?.SpotImages.filter((image) => image.preview === true)[0].url )
-  if (!singleSpot) return null;
+  if (!singleSpot || singleSpot.message) return (<div>Unable to retrieve spots. Please try again shortly.</div>);
+
+  const handleClick = () => {
+    alert("Feature coming soon...")
+  }
 
   return (
     <>
@@ -46,10 +50,10 @@ function GetSingleSpot() {
             <div className='rating-review'>
               <i class="fa-solid fa-star"></i>
               {Number(singleSpot.avgStarRating).toFixed(2)} -
-              {singleSpot.numReviews} reviews
+              {singleSpot.numReviews} {singleSpot.numReviews === 1? "review" : "reviews"}
             </div>
           </div>
-          <button>Reserve</button>
+          <button onClick={handleClick}>Reserve</button>
         </div>
       </div>
     </>
