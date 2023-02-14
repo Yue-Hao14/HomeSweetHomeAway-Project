@@ -2,13 +2,15 @@
  display: inline-flex;
  flex-direction: row;
  flex-wrap: wrap;
+ justify-content: space-between;
+ width: 100vw;
+padding: auto;
 }
 
 .spot-card {
   display: flex;
   flex-direction: column;
-  width: 23%;
-  margin: 1%;
+  width: 25vw;
 }
 
 .clickable-card {
@@ -18,6 +20,7 @@
 .spot-preview {
   width: 270px;
   height: 250px;
+  border-radius: 5%;
 }
 
 .city-state-rating {
