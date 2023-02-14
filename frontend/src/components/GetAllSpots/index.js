@@ -6,8 +6,10 @@ import './index.css';
 
 function GetAllSpots() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(spotActions.getAllSpotsDB())
+  }, [dispatch]);
 
-  useEffect(() => { dispatch(spotActions.getAllSpotsDB()) }, [dispatch]);
   const spots = useSelector((store) => store.spots.allSpots)
   console.log('spots in GetAllSpots component', spots)
 
