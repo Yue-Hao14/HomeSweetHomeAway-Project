@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GetAllSpots from "./components/GetAllSpots";
-
+import GetSingleSpot from "./components/GetSingleSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +21,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <GetAllSpots />
+          </Route>
+          <Route path="/spots/:spotId">
+            <GetSingleSpot />
           </Route>
           <Route path="/">
             <div>Unable to retrieve spots. Please try again shortly.</div>
