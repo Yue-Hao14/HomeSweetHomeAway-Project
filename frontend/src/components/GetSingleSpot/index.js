@@ -32,17 +32,19 @@ function GetSingleSpot() {
         <img className='big-preview-image'
           src={singleSpot.SpotImages.filter((image) => image.preview === true)[0].url}
           alt="spot preview"></img>
-        {
-          singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
-            // console.log('image"s url', image.url)
-            return <img className='other-spot-images' src={image.url} alt="spot"></img>
-          })
-        }
+        <div className='other-spot-images-container'>
+          {
+            singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
+              // console.log('image"s url', image.url)
+              return <img className='other-spot-images' src={image.url} alt="spot"></img>
+            })
+          }
+        </div>
       </div>
       <div className="owner-description-price-reserve">
         <div className='owner-description'>
           <div className='owner'>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</div>
-          <div className='description'>description blank in db{singleSpot.description}</div>
+          <div className='description'>{singleSpot.description}</div>
         </div>
         <div className='price-rating-review-reserve'>
           <div className='price-rating-review'>
@@ -50,7 +52,7 @@ function GetSingleSpot() {
             <div className='rating-review'>
               <i class="fa-solid fa-star"></i>
               {Number(singleSpot.avgStarRating).toFixed(2)}
-              {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews," ",singleSpot.numReviews === 1? "review" : "reviews")}
+              {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
             </div>
           </div>
           <button onClick={handleClick}>Reserve</button>

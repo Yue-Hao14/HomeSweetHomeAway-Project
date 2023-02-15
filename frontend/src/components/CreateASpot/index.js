@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import * as spotActions from "../../store/spots";
 import './CreateASpot.css';
 
@@ -13,6 +14,7 @@ function CreateASpot() {
   const [description, setDescription] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  // const [images, setImages] = useState({});
   const [previewImage, setPreviewImage] = useState('')
   const [otherImage1, setOtherImage1] = useState("")
   const [otherImage2, setOtherImage2] = useState("")
@@ -20,8 +22,9 @@ function CreateASpot() {
   const [otherImage4, setOtherImage4] = useState("")
   const [validationErrors, setValidationErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     let errors = {};
@@ -34,18 +37,30 @@ function CreateASpot() {
     if (!(description.length >= 30)) errors.shortDescription = "Description needs a minimum of 30 characters";
     if (!name.length > 0) errors.emptyName = "Name is required";
     if (!price.length) errors.emptyPrice = "Price is required";
+    // if (!Object.values(images).length > 0) errors.noPreviewImage = "Preview image is required";
+    // if (Object.values(images).length > 0) {
+    //   for (let i = 0; i < Object.values(images).length; i++) {
+    //     const image = Object.values(images)[i];
+    //     if (!image.endsWith('jpg') && !image.endsWith('png') && !image.endsWith('jpeg')) {
+    //       errors[`badImage${i}`] = "Image URL must end in .png, .jpg, or .jpeg"
+    //     }
+    //   }
+    // }
     if (!previewImage.length > 0) errors.emptyPreviewImage = "Preview image is required";
-    if (!previewImage.endsWith('.png') || !previewImage.endsWith('.jpg') || !previewImage.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage1 && (!otherImage1.endsWith('.png') || !otherImage1.endsWith('.jpg') || !otherImage1.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage2 && (!otherImage2.endsWith('.png') || !otherImage2.endsWith('.jpg') || !otherImage2.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage3 && (!otherImage3.endsWith('.png') || !otherImage3.endsWith('.jpg') || !otherImage3.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage4 && (!otherImage4.endsWith('.png') || !otherImage4.endsWith('.jpg') || !otherImage4.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
+    // console.log('previewImage', previewImage.endsWith('jpg'))
+    if (otherImage1 && (!otherImage1.endsWith('.png') && !otherImage1.endsWith('.jpg') && !otherImage1.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage2 && (!otherImage2.endsWith('.png') && !otherImage2.endsWith('.jpg') && !otherImage2.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage3 && (!otherImage3.endsWith('.png') && !otherImage3.endsWith('.jpg') && !otherImage3.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage4 && (!otherImage4.endsWith('.png') && !otherImage4.endsWith('.jpg') && !otherImage4.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
 
     // set the errors obj to validationError state variable
     setValidationErrors(errors);
+    // console.log('validationErrors in useEffect',validationErrors)
+
   }, [country, address, city, state, latitude, longitude, description, name, price, previewImage, otherImage1, otherImage2, otherImage3, otherImage4])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setHasSubmitted(true);
@@ -62,9 +77,30 @@ function CreateASpot() {
       description,
       price
     }
+    console.log('spotInfo',spotInfo)
 
-    
+    const imageInfo = {
+      previewImage,
+      otherImage1,
+      otherImage2,
+      otherImage3,
+      otherImage4
+    }
+    console.log('imageInfo', imageInfo)
+
+    let spotId = ""
+    if (Object.values(validationErrors).length === 0) {
+      spotId = await dispatch(spotActions.createSpotDB(spotInfo, imageInfo))
+
+      console.log('spotId from db', spotId)
+      // redirect to new spot's detail page
+      history.push(`/spots/${spotId}`)
+    }
+
   }
+
+  // // create an imagesObj to hold all the urls so I can set imagesObj as images state variable
+  // let imagesObj = {};
 
   return (
     <div className='outer-container'>
@@ -179,7 +215,8 @@ function CreateASpot() {
             value={previewImage}
             placeholder="Preview Image URL" />
           {hasSubmitted && validationErrors.emptyPreviewImage && (<div className='error'>{validationErrors.emptyPreviewImage}</div>)}
-          {hasSubmitted && !validationErrors.emptyPreviewImage && validationErrors.badPreviewImage(<div className='error'>{validationErrors.badPreviewImage}</div>)}
+          {/* {console.log('validationError in JSX', validationErrors)} */}
+          {hasSubmitted && !validationErrors.emptyPreviewImage && validationErrors.badPreviewImage && (<div className='error'>{validationErrors.badPreviewImage}</div>)}
           <input
             id="otherImage1"
             type="text"

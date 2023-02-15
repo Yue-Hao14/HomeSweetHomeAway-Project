@@ -11,8 +11,14 @@
   height: 412px;
 }
 
+.other-spot-images-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .other-spot-images {
-  width:25%;
+  width:48%;
   height: 205px;
   margin-left: 0.2vw;
   margin-bottom: 0.2vw;
@@ -31,6 +37,7 @@
   padding: 1vw;
   width: 25vw;
   height: 50%;
+  margin: 0 2vw;
 }
 
 .price-rating-review {

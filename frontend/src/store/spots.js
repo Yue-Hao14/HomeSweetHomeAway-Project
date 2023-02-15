@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 
 // action type
 const GET_SPOTS = 'spots/getSpots';
@@ -40,23 +41,63 @@ export const getSingleSpotDB = (spotId) => async (dispatch) => {
 
 
 // create a spot thunk
-export const createSpotDB = (spotInfo) => async (dispatch) => {
-  const response = await fetch(`/api/spots`, {
+export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: spotInfo
+    body: JSON.stringify(spotInfo)
   })
   const newSpot = await response.json();
 
   console.log('newSpot in thunk from db', newSpot)
-  // Still need to add spotImage in db
+  const spotId = newSpot.id
+
   // still need to get spotId from db
 
   // get the newSpot from db and add to redux store
-  dispatch(getSingleSpot(spotId))
+  dispatch(createSpotImageDB(spotId, imageInfo))
+  return spotId;
 }
+
+
+// add spot image thunk
+export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
+  // put all image urls into an array
+  const imageArr = Object.values(imageInfo);
+  // remove/take out first image url which is the previewImage url
+  const previewImageUrl = imageArr.shift()
+  const previewImageObj = {
+    url:previewImageUrl,
+    preview: true
+  }
+  // add preview image to db
+  await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(previewImageObj)
+  })
+
+  //take care of the rest of spot images
+  imageArr.forEach(async (url) => {
+    if (url.length > 0) {
+      await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          url,
+          preview: false
+        })
+      })
+    }
+  })
+}
+
 
 
 // reducers
