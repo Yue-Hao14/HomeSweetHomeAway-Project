@@ -19,7 +19,8 @@ const getSingleSpot = (singleSpot) => {
 }
 
 
-// thunk acrion creators
+
+// thunk action creators
 // get all spots thunk
 export const getAllSpotsDB = () => async (dispatch) => {
   const response = await fetch('/api/spots');
@@ -38,6 +39,25 @@ export const getSingleSpotDB = (spotId) => async (dispatch) => {
 }
 
 
+// create a spot thunk
+export const createSpotDB = (spotInfo) => async (dispatch) => {
+  const response = await fetch(`/api/spots`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: spotInfo
+  })
+  const newSpot = await response.json();
+
+  console.log('newSpot in thunk from db', newSpot)
+  // Still need to add spotImage in db
+  // still need to get spotId from db
+
+  // get the newSpot from db and add to redux store
+  dispatch(getSingleSpot(spotId))
+}
+
 
 // reducers
 const initialState = {};
@@ -54,7 +74,7 @@ const spotReducer = (state = initialState, action) => {
       newState.allSpots = allSpots
       return newState;
     case GET_SINGLE_SPOT:
-      newState = { ...state};
+      newState = { ...state };
       newState.singleSpot = action.singleSpot;
       // console.log('singleSpot newState in reducer', newState)
       return newState;
