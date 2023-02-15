@@ -6,15 +6,15 @@ import './GetAllSpots.css';
 
 function GetAllSpots() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(spotActions.getAllSpotsDB())
   }, [dispatch]);
 
   const spots = useSelector((store) => store.spots.allSpots)
-  console.log('spots in GetAllSpots component', spots)
+  // console.log('spots in GetAllSpots component', spots)
 
   return (
-    <>
       <div className='all-spots'>
         {spots && Object.values(spots).map((spot) => {
           return (
@@ -37,7 +37,6 @@ function GetAllSpots() {
         })
         }
       </div>
-    </>
   )
 
 

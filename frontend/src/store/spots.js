@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // action type
 const GET_SPOTS = 'spots/getSpots';
 const GET_SINGLE_SPOT = 'spots/getSingleSpot'
+// const GET_CURRENT_USER_SPOTS = 'spots/getCurrentUserSpots'
 
 // normal action creators
 const getSpots = (spots) => {
@@ -19,6 +20,12 @@ const getSingleSpot = (singleSpot) => {
   }
 }
 
+// const getCurrentUserSpots = (spots) => {
+//   return {
+//     type: GET_CURRENT_USER_SPOTS,
+//     spots
+//   }
+// }
 
 
 // thunk action creators
@@ -36,7 +43,15 @@ export const getSingleSpotDB = (spotId) => async (dispatch) => {
   const response = await fetch(`/api/spots/${spotId}`);
   const singleSpot = await response.json();
   // console.log('spot in thunk from db', singleSpot)
-  dispatch(getSingleSpot(singleSpot))
+  dispatch(getSingleSpot(singleSpot));
+}
+
+// get all spots owned by the current user
+export const getCurrentUserSpotsDB = () => async (dispatch) => {
+  const response = await csrfFetch('/api/spots/current');
+  const spots = await response.json();
+    console.log('spot in thunk from db', spots)
+  dispatch(getSpots(spots));
 }
 
 
@@ -54,9 +69,8 @@ export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
   console.log('newSpot in thunk from db', newSpot)
   const spotId = newSpot.id
 
-  // still need to get spotId from db
-
-  // get the newSpot from db and add to redux store
+  // initiate createSpotImageDB thunk to
+  // add spot images to DB and redux store
   dispatch(createSpotImageDB(spotId, imageInfo))
   return spotId;
 }
@@ -111,7 +125,7 @@ const spotReducer = (state = initialState, action) => {
       action.spots.Spots.forEach(element => {
         allSpots[element.id] = element;
       });
-      // console.log('allSpots in reducer', allSpots)
+      console.log('allSpots in reducer', allSpots)
       newState.allSpots = allSpots
       return newState;
     case GET_SINGLE_SPOT:
