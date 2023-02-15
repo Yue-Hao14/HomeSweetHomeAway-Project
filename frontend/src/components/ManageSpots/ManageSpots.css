@@ -1,0 +1,21 @@
+.title-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2vh;
+}
+
+button {
+  width: auto;
+  height: auto;
+}
+.price-update-delete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.update-delete {
+  display: flex;
+  flex-direction: row;
+}

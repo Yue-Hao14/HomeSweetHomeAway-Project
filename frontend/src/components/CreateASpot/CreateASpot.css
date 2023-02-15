@@ -1,0 +1,27 @@
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
+  width: 50%;
+}
+
+.title {
+  font-size: larger;
+}
+
+.session-container {
+  padding: 1rem 0;
+  border-bottom: solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-input {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+}

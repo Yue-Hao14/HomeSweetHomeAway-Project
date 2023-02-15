@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as spotActions from "../../store/spots";
 import { useEffect } from 'react';
-import './index.css';
+import './GetSingleSpot.css';
 import { useParams } from 'react-router-dom';
 
 function GetSingleSpot() {
@@ -15,10 +15,14 @@ function GetSingleSpot() {
   }, [dispatch]);
 
   const singleSpot = useSelector((store) => store.spots.singleSpot)
-  // console.log('singleSpot in GetSingleSpot component', singleSpot)
+  console.log('singleSpot in GetSingleSpot component', singleSpot)
 
   // console.log("image url",singleSpot?.SpotImages.filter((image) => image.preview === true)[0].url )
-  if (!singleSpot) return null;
+  if (!singleSpot || singleSpot.message) return (<div>Unable to retrieve spots. Please try again shortly.</div>);
+
+  const handleClick = () => {
+    alert("Feature coming soon...")
+  }
 
   return (
     <>
@@ -28,28 +32,30 @@ function GetSingleSpot() {
         <img className='big-preview-image'
           src={singleSpot.SpotImages.filter((image) => image.preview === true)[0].url}
           alt="spot preview"></img>
-        {
-          singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
-            // console.log('image"s url', image.url)
-            return <img className='other-spot-images' src={image.url} alt="spot"></img>
-          })
-        }
+        <div className='other-spot-images-container'>
+          {
+            singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
+              // console.log('image"s url', image.url)
+              return <img className='other-spot-images' src={image.url} alt="spot"></img>
+            })
+          }
+        </div>
       </div>
       <div className="owner-description-price-reserve">
         <div className='owner-description'>
           <div className='owner'>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</div>
-          <div className='description'>description blank in db{singleSpot.description}</div>
+          <div className='description'>{singleSpot.description}</div>
         </div>
         <div className='price-rating-review-reserve'>
           <div className='price-rating-review'>
             <div className='price'>${singleSpot.price} night</div>
             <div className='rating-review'>
               <i class="fa-solid fa-star"></i>
-              {Number(singleSpot.avgStarRating).toFixed(2)} -
-              {singleSpot.numReviews} reviews
+              {Number(singleSpot.avgStarRating).toFixed(2)}
+              {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
             </div>
           </div>
-          <button>Reserve</button>
+          <button onClick={handleClick}>Reserve</button>
         </div>
       </div>
     </>

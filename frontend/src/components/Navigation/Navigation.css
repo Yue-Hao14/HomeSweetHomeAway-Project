@@ -13,3 +13,13 @@
   color:rgb(242, 87, 31);
   font-size: 20px;
 }
+
+ul {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  display: inline;
+  width: 18vw;
+}
