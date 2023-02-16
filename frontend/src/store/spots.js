@@ -1,3 +1,4 @@
+import GetAllSpots from "../components/GetAllSpots";
 import { csrfFetch } from "./csrf";
 
 // action type
@@ -71,7 +72,7 @@ export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
 
   // initiate createSpotImageDB thunk to
   // add spot images to DB and redux store
-  dispatch(createSpotImageDB(spotId, imageInfo))
+  await dispatch(createSpotImageDB(spotId, imageInfo))
   return spotId;
 }
 
@@ -131,6 +132,21 @@ export const updateSpotDB = (spotId, spotInfo) => async (dispatch) => {
 }
 
 
+// delete a spot thunk
+export const deleteSpotDB = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "DELETE",
+  });
+
+  const data = await response.json();
+  const statusCode = data.statusCode;
+
+  // once successfully deleted the spot in DB,
+  // update redux store with new list of all spots
+  if (statusCode === 200) dispatch(getCurrentUserSpotsDB())
+}
+
+
 //------------------------------------------------------------------
 // reducers
 const initialState = {};
@@ -143,7 +159,7 @@ const spotReducer = (state = initialState, action) => {
       action.spots.Spots.forEach(element => {
         allSpots[element.id] = element;
       });
-      console.log('allSpots in reducer', allSpots)
+      // console.log('allSpots in reducer', allSpots)
       newState.allSpots = allSpots
       return newState;
     case GET_SINGLE_SPOT:

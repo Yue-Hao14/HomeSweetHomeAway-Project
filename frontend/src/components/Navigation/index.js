@@ -16,12 +16,18 @@ function Navigation({ isLoaded }) {
         </NavLink>
         <span>HomeSweetHomeAway</span>
       </div>
+      <div className='creat-profile-container'>
+      {isLoaded && sessionUser &&
+        <div>
+          <NavLink exact to="/spots/new">Create a New Spot</NavLink>
+        </div>
+      }
       {isLoaded && (
         <ul>
-          <NavLink exact to="/spots/new">Create a New Spot</NavLink>
           <ProfileButton user={sessionUser} />
         </ul>
       )}
+      </div>
     </ul>
   );
 }

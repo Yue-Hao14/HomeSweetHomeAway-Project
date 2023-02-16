@@ -14,12 +14,15 @@
   font-size: 20px;
 }
 
-ul {
-  display: flex;
-}
-
 a {
   text-decoration: none;
   display: inline;
   width: 18vw;
+}
+
+.creat-profile-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
 }
