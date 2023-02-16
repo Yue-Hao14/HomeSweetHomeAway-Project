@@ -25,13 +25,37 @@ function GetSingleSpot() {
   // console.log('singleSpot in GetSingleSpot component', singleSpot)
 
   // get reviews from redux store
-  const reviews = useSelector((store) => store.reviews.spot)
-  console.log('reviews from redux store', reviews)
+  const reviewsSpot = useSelector((store) => store.reviews.spot)
+  console.log('reviews from redux store', reviewsSpot)
+
+  // get user info from redux store
+  const sessionUser = useSelector(state => state.session.user);
 
   // if there is no such spot, show error message
   if (!singleSpot || singleSpot.message) return (<div>Unable to retrieve spots. Please try again shortly.</div>);
 
 
+  const checkUserOwner = () => {
+    let result;
+    if (sessionUser) {
+      result = sessionUser.id !== singleSpot.ownerId
+    }
+    console.log('result from checkUserOwner', result)
+    return result;
+  }
+
+
+  // check if logged-in user has posted a review for this spot yet
+  const checkUserReview = () => {
+    let result = true;
+    if (sessionUser) {
+      result = Object.values(reviewsSpot).find(review => {
+        return review.userId === sessionUser.id
+      })
+    }
+    console.log('result from checkUserReview', result)
+    return result;
+  }
 
   const handleClick = () => {
     alert("Feature coming soon...")
@@ -71,14 +95,28 @@ function GetSingleSpot() {
           <button className='activated' onClick={handleClick}>Reserve</button>
         </div>
       </div>
+
       <div className='review-session-container'>
         <div className='rating-review'>
           <i class="fa-solid fa-star"></i>
           {Number(singleSpot.avgStarRating).toFixed(2)}
           {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
         </div>
+
+        {/* when there is no review and logged-in user is not the owner */}
+        {!reviewsSpot && sessionUser && checkUserOwner() &&
+          (<div>Be the first to post a review</div>)
+        }
+
+        {/* when there is review and logged-in user has not posted a review and is not owner */}
+        {reviewsSpot && !checkUserReview() && sessionUser?.id !== singleSpot.ownerId ?
+          (<div>
+            <button>Post Your Review</button>
+          </div>)
+          : ""}
+
         <div className='reviews-container'>
-          {reviews && Object.values(reviews).map(review => {
+          {reviewsSpot && Object.values(reviewsSpot).map(review => {
             return (
               <div className='single-review-container'>
                 <div>{review.User.firstName}</div>
@@ -87,6 +125,8 @@ function GetSingleSpot() {
               </div>
             )
           })}
+
+
         </div>
       </div>
     </>
