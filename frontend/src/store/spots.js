@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 // action type
 const GET_SPOTS = 'spots/getSpots';
 const GET_SINGLE_SPOT = 'spots/getSingleSpot'
-// const GET_CURRENT_USER_SPOTS = 'spots/getCurrentUserSpots'
+const CLEAR_SINGLE_SPOT = 'spots/clearSingleSpot'
 
 // normal action creators
 const getSpots = (spots) => {
@@ -20,14 +20,14 @@ const getSingleSpot = (singleSpot) => {
   }
 }
 
-// const getCurrentUserSpots = (spots) => {
-//   return {
-//     type: GET_CURRENT_USER_SPOTS,
-//     spots
-//   }
-// }
+export const clearSingleSpot = () => {
+  return {
+    type: CLEAR_SINGLE_SPOT
+  }
+}
 
 
+//------------------------------------------------------------------
 // thunk action creators
 // get all spots thunk
 export const getAllSpotsDB = () => async (dispatch) => {
@@ -113,7 +113,25 @@ export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
 }
 
 
+// update spot info in db
+export const updateSpotDB = (spotId, spotInfo) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(spotInfo)
+  })
 
+  const updatedSpot = await response.json();
+  const updatedSpotId = updatedSpot.id
+
+  dispatch(getSingleSpotDB(updatedSpotId))
+  return spotId;
+}
+
+
+//------------------------------------------------------------------
 // reducers
 const initialState = {};
 const spotReducer = (state = initialState, action) => {
@@ -133,6 +151,8 @@ const spotReducer = (state = initialState, action) => {
       newState.singleSpot = action.singleSpot;
       // console.log('singleSpot newState in reducer', newState)
       return newState;
+    case CLEAR_SINGLE_SPOT:
+      return {...state, singleSpot: null}
     default:
       return state;
   }

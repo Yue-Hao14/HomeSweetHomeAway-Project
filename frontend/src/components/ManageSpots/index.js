@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as spotActions from "../../store/spots";
 import { useEffect } from 'react';
 import './ManageSpots.css';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function ManageSpots() {
   const dispatch = useDispatch();

@@ -1,30 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import * as spotActions from "../../store/spots";
-import './CreateASpot.css';
+import './EditSpot.css';
 
-function CreateASpot() {
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [description, setDescription] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  // const [images, setImages] = useState({});
-  const [previewImage, setPreviewImage] = useState('')
-  const [otherImage1, setOtherImage1] = useState("")
-  const [otherImage2, setOtherImage2] = useState("")
-  const [otherImage3, setOtherImage3] = useState("")
-  const [otherImage4, setOtherImage4] = useState("")
-  const [validationErrors, setValidationErrors] = useState({});
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+// this component gets data from redux store
+// then initiate another component to render form and pass existing spot info as props
+function EditSpot() {
+  const spotId = useParams().spotId;
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    // clear existing/old singleSpot data in redux store
+    dispatch(spotActions.clearSingleSpot())
+    // set corret singleSpot in redux store based on spotId
+    dispatch(spotActions.getSingleSpotDB(spotId))
+    // console.log("useEffect fired")
+  }, []);
+
+  // get spot info from redux store
+  const spot = useSelector((store) => store.spots.singleSpot)
+
+  // this is to prevent EditSpotForm being rendered
+  // before singleSpot being populated in store
+  // eg. when App component first restoreUser
+  if (!spot) return null;
+
+  if (spot) {
+    return (
+      <EditSpotForm spot={spot} />
+    )
+  }
+}
+
+
+function EditSpotForm({ spot }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // console.log("spot in EditSpotForm",spot)
+
+  // set spot info from redux store to the state variables
+  const [country, setCountry] = useState(spot ? spot.country : '');
+  const [address, setAddress] = useState(spot ? spot.address : '');
+  const [city, setCity] = useState(spot ? spot.city : '');
+  const [state, setState] = useState(spot ? spot.state : '');
+  const [latitude, setLatitude] = useState(spot ? spot.lat : '');
+  const [longitude, setLongitude] = useState(spot ? spot.lng : '');
+  const [description, setDescription] = useState(spot ? spot.description : '');
+  const [name, setName] = useState(spot ? spot.name : '');
+  const [price, setPrice] = useState(spot ? spot.price : '');
+  // const [previewImage, setPreviewImage] = useState(spot ? spot.previewImage : '')
+  // const [otherImage1, setOtherImage1] = useState("")
+  // const [otherImage2, setOtherImage2] = useState("")
+  // const [otherImage3, setOtherImage3] = useState("")
+  // const [otherImage4, setOtherImage4] = useState("")
+  const [validationErrors, setValidationErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   // error validations
   useEffect(() => {
@@ -33,39 +65,29 @@ function CreateASpot() {
     if (!address.length > 0) errors.emptyAddress = "Address is required";
     if (!city.length > 0) errors.emptyCity = "City is required";
     if (!state.length > 0) errors.emptyState = "State is required";
-    if (!latitude.length > 0) errors.emptyLatitude = "Latitude is required";
-    if (!longitude.length > 0) errors.emptyLongitude = "Longitude is required";
-    if (!(description.length >= 30)) errors.shortDescription = "Description needs a minimum of 30 characters";
+    if (!latitude) errors.emptyLatitude = "Latitude is required";
+    if (!longitude) errors.emptyLongitude = "Longitude is required";
+    if (!description || !(description.length >= 30)) errors.shortDescription = "Description needs a minimum of 30 characters";
     if (!name.length > 0) errors.emptyName = "Name is required";
-    if (!price.length) errors.emptyPrice = "Price is required";
-    // if (!Object.values(images).length > 0) errors.noPreviewImage = "Preview image is required";
-    // if (Object.values(images).length > 0) {
-    //   for (let i = 0; i < Object.values(images).length; i++) {
-    //     const image = Object.values(images)[i];
-    //     if (!image.endsWith('jpg') && !image.endsWith('png') && !image.endsWith('jpeg')) {
-    //       errors[`badImage${i}`] = "Image URL must end in .png, .jpg, or .jpeg"
-    //     }
-    //   }
-    // }
-    if (!previewImage.length > 0) errors.emptyPreviewImage = "Preview image is required";
-    if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
-    // console.log('previewImage', previewImage.endsWith('jpg'))
-    if (otherImage1 && (!otherImage1.endsWith('.png') && !otherImage1.endsWith('.jpg') && !otherImage1.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage2 && (!otherImage2.endsWith('.png') && !otherImage2.endsWith('.jpg') && !otherImage2.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage3 && (!otherImage3.endsWith('.png') && !otherImage3.endsWith('.jpg') && !otherImage3.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage4 && (!otherImage4.endsWith('.png') && !otherImage4.endsWith('.jpg') && !otherImage4.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (!price) errors.emptyPrice = "Price is required";
+    // if (!previewImage.length > 0) errors.emptyPreviewImage = "Preview image is required";
+    // if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
+    // if (otherImage1 && (!otherImage1.endsWith('.png') && !otherImage1.endsWith('.jpg') && !otherImage1.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
+    // if (otherImage2 && (!otherImage2.endsWith('.png') && !otherImage2.endsWith('.jpg') && !otherImage2.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
+    // if (otherImage3 && (!otherImage3.endsWith('.png') && !otherImage3.endsWith('.jpg') && !otherImage3.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
+    // if (otherImage4 && (!otherImage4.endsWith('.png') && !otherImage4.endsWith('.jpg') && !otherImage4.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
 
     // set the errors obj to validationError state variable
     setValidationErrors(errors);
+    // console.log('errors in useEffect', errors)
     // console.log('validationErrors in useEffect',validationErrors)
 
-  }, [country, address, city, state, latitude, longitude, description, name, price, previewImage, otherImage1, otherImage2, otherImage3, otherImage4])
+  }, [country, address, city, state, latitude, longitude, description, name, price])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    // console.log('handleSubmitted fired')
 
     const spotInfo = {
       address,
@@ -78,35 +100,33 @@ function CreateASpot() {
       description,
       price
     }
-    console.log('spotInfo',spotInfo)
+    console.log('spotInfo', spotInfo)
 
-    const imageInfo = {
-      previewImage,
-      otherImage1,
-      otherImage2,
-      otherImage3,
-      otherImage4
-    }
-    console.log('imageInfo', imageInfo)
+    // const imageInfo = {
+    //   previewImage,
+    //   otherImage1,
+    //   otherImage2,
+    //   otherImage3,
+    //   otherImage4
+    // }
+    // console.log('imageInfo', imageInfo)
 
-    let spotId = ""
+    let spotId = spot.id;
+    console.log('spotId', spotId)
     if (Object.values(validationErrors).length === 0) {
-      spotId = await dispatch(spotActions.createSpotDB(spotInfo, imageInfo))
+      await dispatch(spotActions.updateSpotDB(spotId, spotInfo))
 
-      console.log('spotId from db', spotId)
+      // console.log('spotId from db', spotId)
       // redirect to new spot's detail page
       history.push(`/spots/${spotId}`)
     }
 
   }
 
-  // // create an imagesObj to hold all the urls so I can set imagesObj as images state variable
-  // let imagesObj = {};
-
   return (
     <div className='outer-container'>
       <form onSubmit={handleSubmit}>
-        <h2>Create a New Spot</h2>
+        <h2>Update your Spot</h2>
         <div className='session-container'>
           <div className='title'>Where's your place located?</div>
           <div>Guests will only get your exact address once they booked a reservation</div>
@@ -206,7 +226,7 @@ function CreateASpot() {
             placeholder="Price per night (USD)" />
           {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
         </div>
-        <div className='session-container'>
+        {/* <div className='session-container'>
           <div className='title'>Liven up your spot with photos</div>
           <div>Submit a link to at least one photo to publish your spot.</div>
           <input
@@ -216,7 +236,6 @@ function CreateASpot() {
             value={previewImage}
             placeholder="Preview Image URL" />
           {hasSubmitted && validationErrors.emptyPreviewImage && (<div className='error'>{validationErrors.emptyPreviewImage}</div>)}
-          {/* {console.log('validationError in JSX', validationErrors)} */}
           {hasSubmitted && !validationErrors.emptyPreviewImage && validationErrors.badPreviewImage && (<div className='error'>{validationErrors.badPreviewImage}</div>)}
           <input
             id="otherImage1"
@@ -246,11 +265,12 @@ function CreateASpot() {
             value={otherImage4}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
-        </div>
-        <button>Create Spot</button>
+        </div> */}
+        <button>Update your Spot</button>
       </form>
     </div>
   )
 }
 
-export default CreateASpot;
+
+export default EditSpot;
