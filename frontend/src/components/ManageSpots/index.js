@@ -1,13 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as spotActions from "../../store/spots";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './ManageSpots.css';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import DeleteSpotModal from './DeleteSpotModal';
 
 function ManageSpots() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     dispatch(spotActions.getCurrentUserSpotsDB())
@@ -21,16 +25,17 @@ function ManageSpots() {
     history.push(`/spots/${spotId}/edit`)
   }
 
-  const deleteSpot = (e) => {
-    e.preventDefault();
+  const closeMenu = () => setShowMenu(false);
 
+  const routeChange = () => {
+    history.push('/spots/new')
   }
 
   return (
     <>
       <div className='title-container'>
         <h1>Manage Your Spots</h1>
-        <button>Create a New Spot</button>
+        <button onClick={routeChange}>Create a New Spot</button>
       </div>
       <div className='all-spots'>
         {spots && Object.values(spots).map((spot) => {
@@ -50,7 +55,12 @@ function ManageSpots() {
                 <div><span className='price'>${spot.price}</span> night</div>
                 <div className='update-delete'>
                   <button className='update' onClick={updateSpot} value={spot.id}>Update</button>
-                  <button className='delete' onClick={deleteSpot} value={spot.id}>Delete</button>
+                  <button className='delete' value={spot.id}>
+                    <OpenModalMenuItem
+                    itemText="Delete"
+                    // onItemClick={closeMenu}
+                    modalComponent={<DeleteSpotModal spotId={spot.id}/>}
+                  /></button>
                 </div>
               </div>
               {/* </a> */}

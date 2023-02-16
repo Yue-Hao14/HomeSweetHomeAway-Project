@@ -1,0 +1,29 @@
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  width: 28vw;
+}
+
+.modal-container > h2 {
+  margin: 0 auto
+}
+
+.modal-container >div {
+  margin: 2vh
+}
+
+.activated {
+  background-color: rgb(242, 87, 31);
+  color: white;
+  height: 2.5rem;
+  margin: 0.5vh;
+  box-shadow: 2px 2px black;
+}
+
+.deactivated {
+  background-color: grey;
+  color: white;
+  height: 5vh;
+  margin: 0.5vh;
+  box-shadow: 2px 2px black;
+}
