@@ -28,7 +28,7 @@ function GetSingleSpot() {
 
   // get reviews from redux store
   const reviewsSpot = useSelector((store) => store.reviews.spot)
-  // console.log('reviews from redux store', reviewsSpot)
+  console.log('reviews from redux store', reviewsSpot)
 
   // console.log(new Date(reviewsSpot[3].createdAt.split("T")[0]) >new Date(reviewsSpot[5].createdAt.split("T")[0]) )
   let sortedReviewSpot
@@ -49,7 +49,7 @@ function GetSingleSpot() {
     if (sessionUser) {
       result = sessionUser.id !== singleSpot.ownerId
     }
-    // console.log('result from checkUserOwner', result)
+    console.log('result from checkUserOwner', result)
     return result;
   }
 
@@ -113,7 +113,7 @@ function GetSingleSpot() {
         </div>
 
         {/* when there is no review and logged-in user is not the owner */}
-        {!reviewsSpot && sessionUser && checkUserOwner() &&
+        {(!reviewsSpot || Object.values(reviewsSpot).length === 0) && sessionUser && checkUserOwner() &&
           (<div>Be the first to post a review</div>)
         }
 
