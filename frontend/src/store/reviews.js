@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { getSingleSpotDB } from "./spots";
 
 //------------------------------------------------------------------
 // action types
@@ -34,7 +35,9 @@ export const postSpotReviewDB = (spotId, reviewInfo) => async (dispatch) => {
     body: JSON.stringify(reviewInfo)
   })
 
-  return dispatch(getSpotReviewsDB(spotId))
+  dispatch(getSpotReviewsDB(spotId))
+  dispatch(getSingleSpotDB(spotId))
+  return;
 }
 
 

@@ -28,7 +28,14 @@ function GetSingleSpot() {
 
   // get reviews from redux store
   const reviewsSpot = useSelector((store) => store.reviews.spot)
-  console.log('reviews from redux store', reviewsSpot)
+  // console.log('reviews from redux store', reviewsSpot)
+
+  // console.log(new Date(reviewsSpot[3].createdAt.split("T")[0]) >new Date(reviewsSpot[5].createdAt.split("T")[0]) )
+  let sortedReviewSpot
+  if (reviewsSpot) {
+    sortedReviewSpot = Object.values(reviewsSpot).sort((a, b) => (new Date(a.createdAt.split("T")[0]) > new Date(b.createdAt.split("T")[0])) ? -1 : 1)
+  }
+  // console.log('sortedReviewSpot', sortedReviewSpot)
 
   // get user info from redux store
   const sessionUser = useSelector(state => state.session.user);
@@ -42,7 +49,7 @@ function GetSingleSpot() {
     if (sessionUser) {
       result = sessionUser.id !== singleSpot.ownerId
     }
-    console.log('result from checkUserOwner', result)
+    // console.log('result from checkUserOwner', result)
     return result;
   }
 
@@ -55,7 +62,7 @@ function GetSingleSpot() {
         return review.userId === sessionUser.id
       })
     }
-    console.log('result from checkUserReview', result)
+    // console.log('result from checkUserReview', result)
     return result;
   }
 
@@ -123,7 +130,7 @@ function GetSingleSpot() {
           : ""}
 
         <div className='reviews-container'>
-          {reviewsSpot && Object.values(reviewsSpot).map(review => {
+          {reviewsSpot && Object.values(sortedReviewSpot).map(review => {
             return (
               <div className='single-review-container'>
                 <div>{review.User.firstName}</div>
