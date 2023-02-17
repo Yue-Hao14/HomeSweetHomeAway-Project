@@ -5,6 +5,9 @@ import * as reviewActions from "../../store/reviews";
 import { useEffect } from 'react';
 import './GetSingleSpot.css';
 import { useParams } from 'react-router-dom';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import PostReviewModal from "../GetSingleSpot/PostReviewModal";
+import DeleteReviewModal from './DeleteReviewModal';
 
 function GetSingleSpot() {
 
@@ -26,7 +29,15 @@ function GetSingleSpot() {
 
   // get reviews from redux store
   const reviewsSpot = useSelector((store) => store.reviews.spot)
-  console.log('reviews from redux store', reviewsSpot)
+  // console.log('reviews from redux store', reviewsSpot)
+
+
+  // console.log(new Date(reviewsSpot[3].createdAt.split("T")[0]) >new Date(reviewsSpot[5].createdAt.split("T")[0]) )
+  let sortedReviewSpot
+  if (reviewsSpot) {
+    sortedReviewSpot = Object.values(reviewsSpot).sort((a, b) => (new Date(a.createdAt.split("T")[0]) > new Date(b.createdAt.split("T")[0])) ? -1 : 1)
+  }
+  // console.log('sortedReviewSpot', sortedReviewSpot)
 
   // get user info from redux store
   const sessionUser = useSelector(state => state.session.user);
@@ -40,7 +51,7 @@ function GetSingleSpot() {
     if (sessionUser) {
       result = sessionUser.id !== singleSpot.ownerId
     }
-    console.log('result from checkUserOwner', result)
+    // console.log('result from checkUserOwner', result)
     return result;
   }
 
@@ -53,12 +64,17 @@ function GetSingleSpot() {
         return review.userId === sessionUser.id
       })
     }
-    console.log('result from checkUserReview', result)
+    // console.log('result from checkUserReview', result)
     return result;
   }
 
   const handleClick = () => {
     alert("Feature coming soon...")
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log('handleDelete fired')
   }
 
   return (
@@ -104,29 +120,41 @@ function GetSingleSpot() {
         </div>
 
         {/* when there is no review and logged-in user is not the owner */}
-        {!reviewsSpot && sessionUser && checkUserOwner() &&
+        {(!reviewsSpot || Object.values(reviewsSpot).length === 0) && sessionUser && checkUserOwner() &&
           (<div>Be the first to post a review</div>)
         }
 
         {/* when there is review and logged-in user has not posted a review and is not owner */}
         {reviewsSpot && !checkUserReview() && sessionUser?.id !== singleSpot.ownerId ?
           (<div>
-            <button>Post Your Review</button>
+            <button>
+              <OpenModalMenuItem
+              itemText="Post Your Review"
+              modalComponent={<PostReviewModal spotId={spotId} />}
+              />
+            </button>
           </div>)
           : ""}
 
         <div className='reviews-container'>
-          {reviewsSpot && Object.values(reviewsSpot).map(review => {
+          {reviewsSpot && Object.values(sortedReviewSpot).map(review => {
+            let props = {
+              reviewId: review.id,
+              spotId: review.spotId
+            }
             return (
               <div className='single-review-container'>
                 <div>{review.User.firstName}</div>
                 <div className='created-at'>{review.createdAt.split('T')[0]}</div>
                 <div>{review.review}</div>
+                {sessionUser.id === review.userId ? (<button className="delete">
+                  <OpenModalMenuItem
+                  itemText="Delete"
+                  modalComponent={<DeleteReviewModal props={props} />} />
+                </button>) : ""}
               </div>
             )
           })}
-
-
         </div>
       </div>
     </>

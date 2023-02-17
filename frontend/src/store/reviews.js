@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { getSingleSpotDB } from "./spots";
 
 //------------------------------------------------------------------
 // action types
@@ -23,6 +24,35 @@ export const getSpotReviewsDB = (spotId) => async (dispatch) => {
   return dispatch(getSpotReviews(spotReviews));
 }
 
+
+// post a review based on spotId to DB
+export const postSpotReviewDB = (spotId, reviewInfo) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(reviewInfo)
+  })
+
+  dispatch(getSpotReviewsDB(spotId))
+  dispatch(getSingleSpotDB(spotId))
+  return;
+}
+
+
+// delete a review based on reviewId in DB
+export const deleteSpotReviewDB = (reviewId, spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "DELETE"
+  });
+
+  dispatch(getSpotReviewsDB(spotId))
+  dispatch(getSingleSpotDB(spotId))
+  return;
+
+
+}
 
 
 //------------------------------------------------------------------

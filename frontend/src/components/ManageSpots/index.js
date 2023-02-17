@@ -57,10 +57,11 @@ function ManageSpots() {
                   <button className='update' onClick={updateSpot} value={spot.id}>Update</button>
                   <button className='delete' value={spot.id}>
                     <OpenModalMenuItem
-                    itemText="Delete"
-                    // onItemClick={closeMenu}
-                    modalComponent={<DeleteSpotModal spotId={spot.id}/>}
-                  /></button>
+                      itemText="Delete"
+                      // onItemClick={closeMenu}
+                      modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                    />
+                  </button>
                 </div>
               </div>
               {/* </a> */}
