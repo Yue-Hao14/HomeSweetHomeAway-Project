@@ -24,6 +24,19 @@ export const getSpotReviewsDB = (spotId) => async (dispatch) => {
 }
 
 
+// post a review based on spotId to DB
+export const postSpotReviewDB = (spotId, reviewInfo) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(reviewInfo)
+  })
+
+  return dispatch(getSpotReviewsDB(spotId))
+}
+
 
 //------------------------------------------------------------------
 // reducers

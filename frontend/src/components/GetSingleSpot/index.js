@@ -5,6 +5,8 @@ import * as reviewActions from "../../store/reviews";
 import { useEffect } from 'react';
 import './GetSingleSpot.css';
 import { useParams } from 'react-router-dom';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import PostReviewModal from "../GetSingleSpot/PostReviewModal";
 
 function GetSingleSpot() {
 
@@ -111,7 +113,12 @@ function GetSingleSpot() {
         {/* when there is review and logged-in user has not posted a review and is not owner */}
         {reviewsSpot && !checkUserReview() && sessionUser?.id !== singleSpot.ownerId ?
           (<div>
-            <button>Post Your Review</button>
+            <button>
+              <OpenModalMenuItem
+              itemText="Post Your Review"
+              modalComponent={<PostReviewModal spotId={spotId} />}
+              />
+            </button>
           </div>)
           : ""}
 
@@ -125,8 +132,6 @@ function GetSingleSpot() {
               </div>
             )
           })}
-
-
         </div>
       </div>
     </>

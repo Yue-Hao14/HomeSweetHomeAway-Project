@@ -7,6 +7,7 @@ import { deleteSpotDB } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
 
+
 function DeleteSpotModal({ spotId }) {
   // console.log('DeleteSpotModal function component fired')
   const dispatch = useDispatch();
