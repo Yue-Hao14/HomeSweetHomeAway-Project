@@ -9,6 +9,7 @@ import './EditSpot.css';
 function EditSpot() {
   const spotId = useParams().spotId;
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     // clear existing/old singleSpot data in redux store
@@ -21,10 +22,26 @@ function EditSpot() {
   // get spot info from redux store
   const spot = useSelector((store) => store.spots.singleSpot)
 
+  //get sessionUser to confirm user is logged in
+  const sessionUser = useSelector(state => state.session.user);
+  const userId = sessionUser.id;
+  let ownerId;
+  if (spot) {
+    ownerId = spot.Owner.id;
+    if (ownerId !== userId || !sessionUser) {
+      history.push('/')
+    }
+  }
+
   // this is to prevent EditSpotForm being rendered
   // before singleSpot being populated in store
   // eg. when App component first restoreUser
   if (!spot) return null;
+
+
+
+
+
 
   if (spot) {
     return (
@@ -122,6 +139,8 @@ function EditSpotForm({ spot }) {
     }
 
   }
+
+
 
   return (
     <div className='outer-container'>
