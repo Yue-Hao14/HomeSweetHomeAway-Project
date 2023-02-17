@@ -41,6 +41,20 @@ export const postSpotReviewDB = (spotId, reviewInfo) => async (dispatch) => {
 }
 
 
+// delete a review based on reviewId in DB
+export const deleteSpotReviewDB = (reviewId, spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "DELETE"
+  });
+
+  dispatch(getSpotReviewsDB(spotId))
+  dispatch(getSingleSpotDB(spotId))
+  return;
+
+
+}
+
+
 //------------------------------------------------------------------
 // reducers
 const initialState = {};

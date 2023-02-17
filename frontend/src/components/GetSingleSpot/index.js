@@ -7,6 +7,7 @@ import './GetSingleSpot.css';
 import { useParams } from 'react-router-dom';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import PostReviewModal from "../GetSingleSpot/PostReviewModal";
+import DeleteReviewModal from './DeleteReviewModal';
 
 function GetSingleSpot() {
 
@@ -28,7 +29,8 @@ function GetSingleSpot() {
 
   // get reviews from redux store
   const reviewsSpot = useSelector((store) => store.reviews.spot)
-  console.log('reviews from redux store', reviewsSpot)
+  // console.log('reviews from redux store', reviewsSpot)
+
 
   // console.log(new Date(reviewsSpot[3].createdAt.split("T")[0]) >new Date(reviewsSpot[5].createdAt.split("T")[0]) )
   let sortedReviewSpot
@@ -49,7 +51,7 @@ function GetSingleSpot() {
     if (sessionUser) {
       result = sessionUser.id !== singleSpot.ownerId
     }
-    console.log('result from checkUserOwner', result)
+    // console.log('result from checkUserOwner', result)
     return result;
   }
 
@@ -68,6 +70,11 @@ function GetSingleSpot() {
 
   const handleClick = () => {
     alert("Feature coming soon...")
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log('handleDelete fired')
   }
 
   return (
@@ -131,11 +138,20 @@ function GetSingleSpot() {
 
         <div className='reviews-container'>
           {reviewsSpot && Object.values(sortedReviewSpot).map(review => {
+            let props = {
+              reviewId: review.id,
+              spotId: review.spotId
+            }
             return (
               <div className='single-review-container'>
                 <div>{review.User.firstName}</div>
                 <div className='created-at'>{review.createdAt.split('T')[0]}</div>
                 <div>{review.review}</div>
+                {sessionUser.id === review.userId ? (<button className="delete">
+                  <OpenModalMenuItem
+                  itemText="Delete"
+                  modalComponent={<DeleteReviewModal props={props} />} />
+                </button>) : ""}
               </div>
             )
           })}
