@@ -24,7 +24,7 @@ function GetAllSpots() {
                   <div>{spot.name}</div>
                 <div className="city-state-rating">
                   <div>{spot.city}, {spot.state}</div>
-                  <div className='rating'>
+                  <div className='star-rating'>
                     <i class="fa-solid fa-star"></i>
                     <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
                   </div>
