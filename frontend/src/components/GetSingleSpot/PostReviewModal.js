@@ -13,21 +13,20 @@ function PostReviewModal({ spotId }) {
   const history = useHistory();
 
   const [review, setReview] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState([]);
   const [stars, setStar] = useState('');
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   // error validations
   useEffect(() => {
-    // console.log('review length:', review.length)
+    let errorArr = []
+    console.log('review length:', review.length)
     // console.log('stars:', stars)
-    // console.log('error before',error)
-    if (!review.length > 10 || !stars ) {
-      setError('either review or stars not right')
-    } else {
-      setError('')
-    }
-    // console.log('error after',error)
+    console.log('error before',error)
+    if (review.length < 10) errorArr.push('review needs to be at least 10 characters');
+    if (!stars) errorArr.push('need to rate');
+    setError(errorArr)
+    console.log('error.length after',error.length)
   }, [review, stars])
 
 
@@ -67,17 +66,17 @@ function PostReviewModal({ spotId }) {
           <span id={stars <= 2 ? "solid-stars" : ""} onClick={() => setStar(2)}>☆</span>
           <span id={stars <= 1 ? "solid-stars" : ""} onClick={() => setStar(1)}>☆</span> */}
 
-          <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" onClick={() => setStar(5)}></label>
-          <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" onClick={() => setStar(4)}></label>
-          <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" onClick={() => setStar(3)}></label>
-          <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" onClick={() => setStar(2)}></label>
-          <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" onClick={() => setStar(1)}></label>
+          <input type="radio" id="star5" name="rating" value="5" /><label class="full" htmlFor="star5" onClick={() => setStar(5)}></label>
+          <input type="radio" id="star4" name="rating" value="4" /><label class="full" htmlFor="star4" onClick={() => setStar(4)}></label>
+          <input type="radio" id="star3" name="rating" value="3" /><label class="full" htmlFor="star3" onClick={() => setStar(3)}></label>
+          <input type="radio" id="star2" name="rating" value="2" /><label class="full" htmlFor="star2" onClick={() => setStar(2)}></label>
+          <input type="radio" id="star1" name="rating" value="1" /><label class="full" htmlFor="star1" onClick={() => setStar(1)}></label>
         </div>
         <div>  Stars</div>
       </div>
       <button
         disabled={error.length > 0}
-        onClick={handleSubmit}>Submit Your Review</button>
+        onClick={handleSubmit}>{error.length}Submit Your Review</button>
     </div>
 
 
