@@ -1,8 +1,8 @@
 .outer-container {
   display: flex;
   flex-direction: column;
-  margin-left: 25%;
-  width: 50%;
+  margin-left: 30%;
+  width: 40%;
 }
 
 .title {
@@ -24,4 +24,43 @@
 
 .error {
   color: red;
+}
+
+input {
+  background-color: rgb(220, 230, 247);
+}
+
+textarea {
+  background-color: rgb(220, 230, 247);
+}
+
+.session-container > div {
+  margin-bottom: 1vh;
+}
+
+.price-input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.session-container > div > span {
+  margin-right: 1vw;
+}
+
+input.price {
+  width: 100%;
+}
+
+#previewImage, #otherImage1, #otherImage2, #otherImage3, #otherImage4 {
+  margin: 0.5vh 0;
+}
+
+.create-spot-button {
+  display: flex;
+  justify-content: center;
+  margin: 1vh 0;
+}
+.create-spot-button > button {
+width: 30%;
 }

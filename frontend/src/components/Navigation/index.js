@@ -9,7 +9,7 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul className='navigation'>
+    <div className='navigation'>
       <div className='logo'>
         <NavLink exact to="/">
           <i class="fa-solid fa-house" />
@@ -28,7 +28,7 @@ function Navigation({ isLoaded }) {
         </ul>
       )}
       </div>
-    </ul>
+    </div>
   );
 }
 

@@ -4,6 +4,9 @@
   width: 400px;
 }
 
+.signup-form > div {
+  margin: 1vh 0;
+}
 .signup-form > label >input {
   margin: 4px ;
   border: 2px solid black;
@@ -16,6 +19,9 @@
   width: 400px;
 }
 
+.signup-form > button:disabled {
+  background-color: grey;
+}
 .signup-form > button {
   margin: 6px ;
   height: 50px;

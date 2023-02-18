@@ -4,6 +4,10 @@
   background-color: rgb(210, 226, 248);
 }
 
+.login-form > button:disabled {
+  background-color: gray;
+}
+
 .login-form > button {
   margin: 6px ;
   height: 50px;

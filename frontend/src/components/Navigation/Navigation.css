@@ -1,6 +1,7 @@
 .navigation {
   display: flex;
   justify-content: space-between;
+  margin:0 1vw;;
 }
 
 .logo > span {
@@ -14,7 +15,7 @@
   font-size: 20px;
 }
 
-a {
+.creat-profile-container > a {
   text-decoration: none;
   display: inline;
   width: 18vw;

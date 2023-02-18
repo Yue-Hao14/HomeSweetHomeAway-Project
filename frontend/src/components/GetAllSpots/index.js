@@ -15,28 +15,28 @@ function GetAllSpots() {
   // console.log('spots in GetAllSpots component', spots)
 
   return (
-      <div className='all-spots'>
-        {spots && Object.values(spots).map((spot) => {
-          return (
-            <div className='spot-card'>
-                <a className='clickable-card' href={`/spots/${spot.id}`}>
-                <img className="spot-preview" src={spot.previewImage} alt="spot preview"></img>
-                  <div>{spot.name}</div>
-                <div className="city-state-rating">
-                  <div>{spot.city}, {spot.state}</div>
-                  <div className='star-rating'>
-                    <i class="fa-solid fa-star"></i>
-                    <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
-                  </div>
+    <div className='all-spots'>
+      {spots && Object.values(spots).map((spot) => {
+        return (
+          <div className='spot-card'>
+            <a className='clickable-card' href={`/spots/${spot.id}`}>
+              <img className="spot-preview" src={spot.previewImage} alt="spot preview"></img>
+              <div id="spot-name">{spot.name}</div>
+              <div className="city-state-rating">
+                <div>{spot.city}, {spot.state}</div>
+                <div className='star-rating'>
+                  <i class="fa-solid fa-star"></i>
+                  <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
                 </div>
-                <div>
-                  <span className='price'>${spot.price}</span> night</div>
-            </a>
               </div>
-          )
-        })
-        }
-      </div>
+              <div>
+                <span className='price'>${spot.price}</span> night</div>
+            </a>
+          </div>
+        )
+      })
+      }
+    </div>
   )
 
 

@@ -50,13 +50,14 @@ function PostReviewModal({ spotId }) {
   }
 
   return (
+    <>
     <div className="post-review-modal-container">
       <h2>How was your stay?</h2>
       <textarea
         placeholder="Leave your review here..."
         value={review}
-        rows="5"
-        cols="33"
+        rows="6"
+        cols="45"
         onChange={(e) => setReview(e.target.value)}></textarea>
       <div className="stars-rating-container">
         <div className="rating">
@@ -76,9 +77,10 @@ function PostReviewModal({ spotId }) {
       </div>
       <button
         disabled={error.length > 0}
-        onClick={handleSubmit}>{error.length}Submit Your Review</button>
+        onClick={handleSubmit}
+        className="submit-review activated">Submit Your Review</button>
     </div>
-
+    </>
 
   )
 

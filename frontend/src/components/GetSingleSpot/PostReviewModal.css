@@ -5,23 +5,14 @@
   align-items: center;
 }
 
-/*
-.star-rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-}
-.star-rating > span:hover:before,
-.star-rating > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   color: rgb(242, 87, 31)
+.post-review-modal-container > h2 {
+  display: flex;
+  justify-content: center;
 }
 
-#solid {
-  content: "\2605";
-} */
-
-
+.submit-review:disabled {
+  background-color: grey;
+  }
 
 /****** Style Star Rating Widget *****/
 
@@ -29,6 +20,7 @@
   border: none;
   float: left;
   direction: rtl;
+  margin: 0.5vh 0;
 }
 
 .rating > input { display: none; }
