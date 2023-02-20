@@ -1,5 +1,7 @@
 
-# `AirBnB Clone`
+# `HomeSweetHomeAway Clone`
+
+## Link to live site: https://homesweethomeaway.onrender.com/
 
 ## Database Schema Design
 
