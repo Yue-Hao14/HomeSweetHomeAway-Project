@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   margin:0 1vw;;
+  border-bottom: solid rgb(228, 228, 228);
 }
 
 .logo > span {

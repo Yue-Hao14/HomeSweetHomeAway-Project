@@ -39,6 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push('/');
   };
 
   const manageSpot = (e) => {
@@ -57,16 +58,16 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="dropdown">
-            <li>Hello, {user.firstName}</li>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+            <div>Hello, {user.firstName}</div>
+            <div>First Name: {user.username}</div>
+            <div>Name: {user.firstName} {user.lastName}</div>
+            <div>Email: {user.email}</div>
+            <div>
               <button onClick={manageSpot}>Manage Spots</button>
-            </li>
-            <li>
+            </div>
+            <div>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </div>
           </div>
         ) : (
           <div className="dropdown">

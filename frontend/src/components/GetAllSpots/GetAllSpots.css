@@ -1,19 +1,22 @@
-@media screen and (min-width:1500px ){
+@media screen and (min-width:1500px) {
   .spot-card {
     width: 23vw;
   }
 }
-@media screen and (min-width:1000px) and (max-width: 1500px){
+
+@media screen and (min-width:1000px) and (max-width: 1500px) {
   .spot-card {
     width: 31vw;
   }
 }
-@media screen and (min-width:700px) and (max-width: 1000px){
+
+@media screen and (min-width:700px) and (max-width: 1000px) {
   .spot-card {
     width: 48vw;
   }
 }
-@media screen and (max-width:700px ){
+
+@media screen and (max-width:700px) {
   .spot-card {
     width: 100vw;
   }
@@ -65,5 +68,3 @@
 .rating>div {
   margin: 2px;
 }
-
-

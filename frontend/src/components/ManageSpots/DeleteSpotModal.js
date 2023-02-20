@@ -7,7 +7,6 @@ import { deleteSpotDB } from "../../store/spots";
 import { useHistory } from "react-router-dom";
 
 
-
 function DeleteSpotModal({ spotId }) {
   // console.log('DeleteSpotModal function component fired')
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ function DeleteSpotModal({ spotId }) {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    // console.log('handleDelete fired')
+    console.log('handleDelete fired')
     // console.log(spotId)
 
     await dispatch(deleteSpotDB(spotId))
