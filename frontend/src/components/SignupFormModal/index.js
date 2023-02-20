@@ -34,9 +34,9 @@ function SignupFormModal() {
     <>
       <h1>Sign Up</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
+        <div>
+          {errors.map((error, idx) => <div className="error" key={idx}>{error}</div>)}
+        </div>
         <label>
           Email
           <input
@@ -92,6 +92,7 @@ function SignupFormModal() {
           />
         </label>
         <button type="submit"
+        className="activated"
         disabled={email.length === 0 ||
         username.length < 4 ||
         firstName.length === 0 ||

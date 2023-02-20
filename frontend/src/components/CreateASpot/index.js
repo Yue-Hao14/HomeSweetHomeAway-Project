@@ -78,7 +78,7 @@ function CreateASpot() {
       description,
       price
     }
-    console.log('spotInfo',spotInfo)
+    console.log('spotInfo', spotInfo)
 
     const imageInfo = {
       previewImage,
@@ -197,14 +197,16 @@ function CreateASpot() {
         <div className='session-container'>
           <div className='title'>Set a base price for your spot</div>
           <div>Competitive pricing can help your listing stand out and rank higher in search results.</div>
-          <span>$</span>
-          <input
-            id="price"
-            type="number"
-            onChange={e => setPrice(e.target.value)}
-            value={price}
-            placeholder="Price per night (USD)" />
-          {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
+          <div className='price-input'>
+            <span>$</span>
+            <input
+              className="price"
+              type="number"
+              onChange={e => setPrice(e.target.value)}
+              value={price}
+              placeholder="Price per night (USD)" />
+            {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
+          </div>
         </div>
         <div className='session-container'>
           <div className='title'>Liven up your spot with photos</div>
@@ -247,7 +249,9 @@ function CreateASpot() {
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
         </div>
-        <button>Create Spot</button>
+        <div className='create-spot-button'>
+          <button className='activated'>Create Spot</button>
+          </div>
       </form>
     </div>
   )

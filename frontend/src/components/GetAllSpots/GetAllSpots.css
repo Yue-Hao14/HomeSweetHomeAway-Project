@@ -1,15 +1,38 @@
+@media screen and (min-width:1500px ){
+  .spot-card {
+    width: 23vw;
+  }
+}
+@media screen and (min-width:1000px) and (max-width: 1500px){
+  .spot-card {
+    width: 31vw;
+  }
+}
+@media screen and (min-width:700px) and (max-width: 1000px){
+  .spot-card {
+    width: 48vw;
+  }
+}
+@media screen and (max-width:700px ){
+  .spot-card {
+    width: 100vw;
+  }
+}
+
+
+
 .all-spots {
- display: inline-flex;
- flex-direction: row;
- flex-wrap: wrap;
- width: 100vw;
-padding: auto;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100vw;
+  padding: auto;
 }
 
 .spot-card {
   display: flex;
   flex-direction: column;
-  width: 270px;
+  /* width: 270px; */
   margin: 0.5vw
 }
 
@@ -17,10 +40,15 @@ padding: auto;
   text-decoration: none;
   color: black;
 }
+
 .spot-preview {
   width: 270px;
   height: 250px;
   border-radius: 5%;
+}
+
+#spot-name {
+  width: 270px;
 }
 
 .city-state-rating {
@@ -34,10 +62,6 @@ padding: auto;
   display: flex;
 }
 
-.rating > div {
+.rating>div {
   margin: 2px;
-}
-
-.price {
-  font-weight: bold;
 }
