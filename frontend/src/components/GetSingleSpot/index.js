@@ -109,7 +109,7 @@ function GetSingleSpot() {
                 {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
               </div>
             </div>
-            <button className='activated' onClick={handleClick}>Reserve</button>
+            <button className='reserve activated' onClick={handleClick}>Reserve</button>
           </div>
         </div>
 

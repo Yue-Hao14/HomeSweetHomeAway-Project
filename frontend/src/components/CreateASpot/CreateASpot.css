@@ -34,7 +34,7 @@ textarea {
   background-color: rgb(220, 230, 247);
 }
 
-.session-container > div {
+.session-container>div {
   margin-bottom: 1vh;
 }
 
@@ -44,7 +44,7 @@ textarea {
   flex-wrap: nowrap;
 }
 
-.session-container > div > span {
+.session-container>div>span {
   margin-right: 1vw;
 }
 
@@ -52,7 +52,11 @@ input.price {
   width: 100%;
 }
 
-#previewImage, #otherImage1, #otherImage2, #otherImage3, #otherImage4 {
+#previewImage,
+#otherImage1,
+#otherImage2,
+#otherImage3,
+#otherImage4 {
   margin: 0.5vh 0;
 }
 
@@ -61,6 +65,7 @@ input.price {
   justify-content: center;
   margin: 1vh 0;
 }
-.create-spot-button > button {
-width: 30%;
+
+.create-spot-button>button {
+  width: 30%;
 }

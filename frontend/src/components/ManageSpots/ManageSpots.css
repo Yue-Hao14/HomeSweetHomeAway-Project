@@ -8,6 +8,7 @@
 button {
   height: auto;
 }
+
 .price-update-delete {
   display: flex;
   flex-direction: row;
@@ -19,3 +20,15 @@ button {
   display: flex;
   flex-direction: row;
 }
+
+.spot-name {
+  width: 270px;
+  ;
+}
+
+#create-spot,
+#update-spot,
+#delete-spot {
+  height: 80%;
+}
+
