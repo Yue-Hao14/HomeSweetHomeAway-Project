@@ -105,7 +105,7 @@ function GetSingleSpot() {
               <div><span id='price'>${singleSpot.price}</span> night</div>
               <div className='rating-review'>
                 <i class="fa-solid fa-star"></i>
-                {Number(singleSpot.avgStarRating).toFixed(2)}
+                {singleSpot.avgStarRating === null ? "New" : Number(singleSpot.avgStarRating).toFixed(2)}
                 {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
               </div>
             </div>
@@ -116,7 +116,7 @@ function GetSingleSpot() {
         <div className='review-session-container'>
           <div className='rating-review' id="rating-review-bigger">
             <i class="fa-solid fa-star"></i>
-            {Number(singleSpot.avgStarRating).toFixed(2)}
+            {singleSpot.avgStarRating === null ? "New" : Number(singleSpot.avgStarRating).toFixed(2)}
             {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
           </div>
 

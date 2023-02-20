@@ -24,11 +24,18 @@ function EditSpot() {
 
   //get sessionUser to confirm user is logged in
   const sessionUser = useSelector(state => state.session.user);
+
+  // if user is not logged in, redirect back to home page
+  if (!sessionUser) {
+    history.push('/')
+  }
+
+  // if logged-in user is not the owner, redirect back to home page
   const userId = sessionUser.id;
   let ownerId;
   if (spot) {
     ownerId = spot.Owner.id;
-    if (ownerId !== userId || !sessionUser) {
+    if (ownerId !== userId) {
       history.push('/')
     }
   }
@@ -37,8 +44,6 @@ function EditSpot() {
   // before singleSpot being populated in store
   // eg. when App component first restoreUser
   if (!spot) return null;
-
-
 
 
 
@@ -236,14 +241,18 @@ function EditSpotForm({ spot }) {
         <div className='session-container'>
           <div className='title'>Set a base price for your spot</div>
           <div>Competitive pricing can help your listing stand out and rank higher in search results.</div>
-          <span>$</span>
-          <input
-            className="price"
-            type="number"
-            onChange={e => setPrice(e.target.value)}
-            value={price}
-            placeholder="Price per night (USD)" />
-          {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
+          <div className='price-input'>
+            <span>$</span>
+            <input
+              className="price"
+              type="number"
+              onChange={e => setPrice(e.target.value)}
+              value={price}
+              placeholder="Price per night (USD)" />
+          </div>
+          <div>
+            {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
+          </div>
         </div>
         {/* <div className='session-container'>
           <div className='title'>Liven up your spot with photos</div>
@@ -287,10 +296,10 @@ function EditSpotForm({ spot }) {
         </div> */}
         <div className='update-spot-button-container'>
 
-        <button className='activated' id="update-spot">Update your Spot</button>
+          <button className='activated' id="update-spot">Update your Spot</button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   )
 }
 

@@ -7,11 +7,22 @@
 .dropdown {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  top: 6%;
+  left: 80%;
+  width: fit-content;
+  border: solid black;
+  background-color: white;
+}
+
+.dropdown>div,
+.dropdown>li {
+  margin: 0.5vh 0.5vw;
 }
 
 .profile-button {
   font-size: 30px;
-  border:0cm;
+  border: 0cm;
   background-color: white;
   color: rgb(131, 131, 131);
 }

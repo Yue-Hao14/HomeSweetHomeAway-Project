@@ -205,6 +205,8 @@ function CreateASpot() {
               onChange={e => setPrice(e.target.value)}
               value={price}
               placeholder="Price per night (USD)" />
+          </div>
+          <div>
             {hasSubmitted && validationErrors.emptyPrice && (<div className='error'>{validationErrors.emptyPrice}</div>)}
           </div>
         </div>
@@ -251,7 +253,7 @@ function CreateASpot() {
         </div>
         <div className='create-spot-button'>
           <button className='activated'>Create Spot</button>
-          </div>
+        </div>
       </form>
     </div>
   )
