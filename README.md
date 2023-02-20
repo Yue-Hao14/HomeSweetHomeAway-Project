@@ -1,7 +1,14 @@
 
 # `HomeSweetHomeAway Clone`
 
-## Link to live site: https://homesweethomeaway.onrender.com/
+## Link to live site: 
+https://homesweethomeaway.onrender.com/
+
+## Description:
+It is a clone of AirBnB website.
+
+## Technologies used:
+JavaScript, React, Redux, SQL
 
 ## Database Schema Design
 
