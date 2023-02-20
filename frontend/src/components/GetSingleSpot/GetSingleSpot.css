@@ -37,13 +37,19 @@
   padding: 2vh 0;
 }
 
+.owner-description {
+  display: inline-block;
+  width: 70%;
+}
+
 .price-rating-review-reserve {
+  display: inline-flex;
+  flex-direction: column;
   border: solid black;
   border-radius: 5%;
   padding: 1vw;
-  width: 1000px;
   height: 50%;
-  margin: 0 2vw;
+  width: 30%;
 }
 
 .price-rating-review {
@@ -54,7 +60,7 @@
   margin: 1vh
 }
 
-button {
+.reserve {
   width: 100%;
   height: 50%
 }
@@ -71,12 +77,12 @@ button {
 
 .name {
   font-size: x-large;
-  margin: 1vh;
+  margin: 1vh 0;
 }
 
 .city-state-country {
   font-size: large;
-  margin: 1vh;
+  margin: 1vh 0;
 }
 
 .single-review-container {

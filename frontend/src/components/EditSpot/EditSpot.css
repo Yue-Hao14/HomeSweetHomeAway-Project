@@ -1,0 +1,9 @@
+.update-spot-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 1vh 0;
+}
+
+.update-spot-button-container>button {
+  width: 30%;
+}

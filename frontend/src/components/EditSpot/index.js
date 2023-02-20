@@ -238,7 +238,7 @@ function EditSpotForm({ spot }) {
           <div>Competitive pricing can help your listing stand out and rank higher in search results.</div>
           <span>$</span>
           <input
-            id="price"
+            className="price"
             type="number"
             onChange={e => setPrice(e.target.value)}
             value={price}
@@ -285,7 +285,10 @@ function EditSpotForm({ spot }) {
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
         </div> */}
-        <button>Update your Spot</button>
+        <div className='update-spot-button-container'>
+
+        <button className='activated' id="update-spot">Update your Spot</button>
+        </div>
       </form>
     </div>
   )
