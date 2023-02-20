@@ -41,7 +41,7 @@ function ManageSpots() {
         {spots && Object.values(spots).map((spot) => {
           return (
             <div className='spot-card'>
-              <a className='clickable-card' href={`/spots/${spot.id}`}>
+              {/* <a className='clickable-card' href={`/spots/${spot.id}`}> */}
                 <img className="spot-preview" src={spot.previewImage} alt="spot preview"></img>
                 <div className='spot-name'>{spot.name}</div>
                 <div className="city-state-rating">
@@ -63,7 +63,7 @@ function ManageSpots() {
                     </button>
                   </div>
                 </div>
-              </a>
+              {/* </a> */}
             </div>
           )
         })

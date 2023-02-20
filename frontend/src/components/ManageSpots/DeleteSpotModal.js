@@ -13,7 +13,7 @@ function DeleteSpotModal({ spotId }) {
   const { closeModal } = useModal();
   const history = useHistory();
 
-  const handleDelete = async (e) => {
+  const handleDeleteSpot = async (e) => {
     e.preventDefault();
     console.log('handleDelete fired')
     // console.log(spotId)
@@ -36,7 +36,7 @@ function DeleteSpotModal({ spotId }) {
         <h2>Confirm Delete</h2>
         <div>Are you sure you want to remove this spot
           from the listings?</div>
-        <button className="activated" onClick={handleDelete}>Yes (Delete Spot)</button>
+        <button className="activated" onClick={handleDeleteSpot}>Yes (Delete Spot)</button>
         <button className="deactivated" onClick={handleCancel}>No (Keep Spot)</button>
       </div>
     </>
