@@ -148,7 +148,7 @@ function GetSingleSpot() {
                   <div id="firstName">{review.User.firstName}</div>
                   <div className='created-at'>{review.createdAt.split('T')[0]}</div>
                   <div id="review-content">{review.review}</div>
-                  {sessionUser.id === review.userId ? (<button className="deactivated" id="delete-review">
+                  {sessionUser?.id === review.userId ? (<button className="deactivated" id="delete-review">
                     <OpenModalMenuItem
                       itemText="Delete"
                       modalComponent={<DeleteReviewModal props={props} />} />
