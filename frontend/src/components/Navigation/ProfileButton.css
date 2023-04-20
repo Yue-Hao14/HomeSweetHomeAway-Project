@@ -8,16 +8,21 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 10%;
+  top: 13%;
   right:2%;
   width: fit-content;
-  border: solid black;
   background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+  border-radius: 10px;
+  padding: 15px 15px;
 }
 
 .dropdown>div,
 .dropdown>li {
-  margin: 0.5vh 0.5vw;
+  padding: 0.5vh 0.5vw;
+}
+.dropdown div:hover {
+  background-color: rgb(243, 243, 243);
 }
 
 .profile-button {
@@ -29,8 +34,23 @@
   width: 100px;
   height: 50px;
   border-radius: 30px;
+  cursor: pointer;
+}
+.profile-button:hover {
+  box-shadow:  0 2px 4px rgba(0,0,0,0.18);;
 }
 
 .profile-button .fa-bars {
   margin-right: 15px;
+}
+
+
+
+.dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: inherit;
+  padding: 0;
 }

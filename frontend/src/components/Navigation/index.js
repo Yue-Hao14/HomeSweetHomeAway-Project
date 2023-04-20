@@ -16,7 +16,7 @@ function Navigation({ isLoaded }) {
           <span>HomeSweetHomeAway</span>
         </NavLink>
       </div>
-      <div className='creat-profile-container'>
+      <div className='right-container'>
         {isLoaded && sessionUser &&
             <NavLink exact to="/spots/new">Create a New Spot</NavLink>
         }

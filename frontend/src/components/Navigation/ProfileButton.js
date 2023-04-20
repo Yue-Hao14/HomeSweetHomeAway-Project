@@ -59,10 +59,6 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="dropdown">
-            <div>Hello, {user.firstName}</div>
-            <div>First Name: {user.username}</div>
-            <div>Name: {user.firstName} {user.lastName}</div>
-            <div>Email: {user.email}</div>
             <div>
               <button onClick={manageSpot}>Manage Spots</button>
             </div>
