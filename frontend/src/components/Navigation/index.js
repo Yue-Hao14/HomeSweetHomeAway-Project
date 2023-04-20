@@ -13,14 +13,12 @@ function Navigation({ isLoaded }) {
       <div className='logo'>
         <NavLink exact to="/">
           <i class="fa-solid fa-house" />
+          <span>HomeSweetHomeAway</span>
         </NavLink>
-        <span>HomeSweetHomeAway</span>
       </div>
       <div className='creat-profile-container'>
         {isLoaded && sessionUser &&
-          <div>
             <NavLink exact to="/spots/new">Create a New Spot</NavLink>
-          </div>
         }
         {isLoaded && (
           <ul>

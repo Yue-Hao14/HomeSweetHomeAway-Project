@@ -6,21 +6,26 @@
   border-bottom: solid rgb(228, 228, 228);
 }
 
-.logo > span {
+.logo a {
+  text-decoration: none;
+}
+
+.logo a > span {
   padding: 0 10px;
   font-size: x-large;
-  color:rgb(242, 87, 31);
+  color:#FF385C;;
 }
 
 .logo > a > i {
-  color:rgb(242, 87, 31);
+  color:#FF385C;;
   font-size: 20px;
 }
 
 .creat-profile-container > a {
   text-decoration: none;
   display: inline;
-  width: 18vw;
+  width: 10vw;
+  color: inherit;
 }
 
 .creat-profile-container {

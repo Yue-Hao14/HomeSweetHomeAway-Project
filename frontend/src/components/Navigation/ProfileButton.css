@@ -7,9 +7,9 @@
 .dropdown {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 6%;
-  left: 80%;
+  position: absolute;
+  top: 10%;
+  right:2%;
   width: fit-content;
   border: solid black;
   background-color: white;
@@ -25,4 +25,12 @@
   border: 0cm;
   background-color: white;
   color: rgb(131, 131, 131);
+  border: 1px solid lightgray;
+  width: 100px;
+  height: 50px;
+  border-radius: 30px;
+}
+
+.profile-button .fa-bars {
+  margin-right: 15px;
 }
