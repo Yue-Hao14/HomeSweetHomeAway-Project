@@ -21,9 +21,7 @@ function Navigation({ isLoaded }) {
             <NavLink exact to="/spots/new">Create a New Spot</NavLink>
         }
         {isLoaded && (
-          <ul>
             <ProfileButton user={sessionUser} />
-          </ul>
         )}
       </div>
     </div>

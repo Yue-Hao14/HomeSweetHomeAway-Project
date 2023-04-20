@@ -20,8 +20,7 @@
 
 .logo>a>i {
   color: #FF385C;
-  ;
-  font-size: 20px;
+  font-size: 28px;
 }
 
 .right-container>a {
@@ -29,17 +28,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10vw;
   color: inherit;
   width: 180px;
   height: 50px;
   border-radius: 30px;
+  margin-right: 5px;
 }
 
 .right-container>a:hover {
   background-color: rgb(243, 243, 243);
 }
-
 
 .right-container {
   display: flex;
