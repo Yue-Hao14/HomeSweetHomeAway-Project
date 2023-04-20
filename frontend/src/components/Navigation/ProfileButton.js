@@ -53,15 +53,12 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu} className="profile-button">
+        <i className="fa-solid fa-bars"></i>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="dropdown">
-            <div>Hello, {user.firstName}</div>
-            <div>First Name: {user.username}</div>
-            <div>Name: {user.firstName} {user.lastName}</div>
-            <div>Email: {user.email}</div>
             <div>
               <button onClick={manageSpot}>Manage Spots</button>
             </div>

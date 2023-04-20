@@ -2,28 +2,44 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin:0 1vw;;
+  margin: 0 1vw;
+  ;
   border-bottom: solid rgb(228, 228, 228);
 }
 
-.logo > span {
+.logo a {
+  text-decoration: none;
+}
+
+.logo a>span {
   padding: 0 10px;
   font-size: x-large;
-  color:rgb(242, 87, 31);
+  color: #FF385C;
+  ;
 }
 
-.logo > a > i {
-  color:rgb(242, 87, 31);
-  font-size: 20px;
+.logo>a>i {
+  color: #FF385C;
+  font-size: 28px;
 }
 
-.creat-profile-container > a {
+.right-container>a {
   text-decoration: none;
-  display: inline;
-  width: 18vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
+  width: 180px;
+  height: 50px;
+  border-radius: 30px;
+  margin-right: 5px;
 }
 
-.creat-profile-container {
+.right-container>a:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+.right-container {
   display: flex;
   flex-direction: row;
   align-items: center;
