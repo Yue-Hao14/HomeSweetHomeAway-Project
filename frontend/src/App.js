@@ -9,6 +9,7 @@ import GetSingleSpot from "./components/GetSingleSpot";
 import CreateASpot from "./components/CreateASpot";
 import ManageSpots from "./components/ManageSpots";
 import EditSpot from "./components/EditSpot";
+import GetTrips from "./components/Trips";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path="/spots/:spotId">
             <GetSingleSpot />
+          </Route>
+          <Route path="/trips">
+            <GetTrips />
           </Route>
           <Route path="/">
             <div>Unable to retrieve spots. Please try again shortly.</div>

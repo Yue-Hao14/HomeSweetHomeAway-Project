@@ -48,6 +48,12 @@ function ProfileButton({ user }) {
     closeMenu();
   }
 
+  const GetTrips = (e) => {
+    e.preventDefault();
+    history.push('/trips');
+    closeMenu();
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -59,6 +65,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <div className="dropdown">
+            <div><button onClick={GetTrips}>Trips</button></div>
             <div>
               <button onClick={manageSpot}>Manage Spots</button>
             </div>
