@@ -51,7 +51,7 @@ export const getSingleSpotDB = (spotId) => async (dispatch) => {
 export const getCurrentUserSpotsDB = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots/current');
   const spots = await response.json();
-    console.log('spot in thunk from db', spots)
+    // console.log('spot in thunk from db', spots)
   dispatch(getSpots(spots));
 }
 

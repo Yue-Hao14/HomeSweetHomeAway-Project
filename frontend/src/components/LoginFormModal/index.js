@@ -27,9 +27,10 @@ function LoginFormModal() {
 
   const handleDemoUser = (e) => {
     e.preventDefault();
-    setCredential('demo@user.io');
-    setPassword('password')
-    return handleSubmit();
+    return dispatch(sessionActions.login({
+       credential:'demo@user.io',
+       password:'password' }))
+    .then(closeModal);
   }
 
   return (
@@ -65,7 +66,7 @@ function LoginFormModal() {
             password.length < 6}>
           Log In
         </button>
-        <a href="button" onClick={handleDemoUser}>Demo User</a>
+        <button onClick={handleDemoUser}>Demo User</button>
       </form>
     </>
   );
