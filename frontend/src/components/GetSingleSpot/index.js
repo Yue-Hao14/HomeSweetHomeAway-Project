@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import PostReviewModal from "../GetSingleSpot/PostReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
+import { Calendar } from 'react-date-range';
 
 function GetSingleSpot() {
 
@@ -89,7 +90,6 @@ function GetSingleSpot() {
           <div className='other-spot-images-container'>
             {
               singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
-                // console.log('image"s url', image.url)
                 return <img className='other-spot-images' src={image.url} alt="spot"></img>
               })
             }
@@ -109,7 +109,12 @@ function GetSingleSpot() {
                 {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
               </div>
             </div>
+            <div className='reservation-container'>
+            <Calendar
+            date={new Date()}
+            />
             <button className='reserve activated' onClick={handleClick}>Reserve</button>
+            </div>
           </div>
         </div>
 

@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as bookingActions from "../../store/bookings";
 import { useEffect } from 'react';
 import './UserTrips.css'
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { Calendar } from 'react-date-range';
 
 function GetTrips() {
   const dispatch = useDispatch();
