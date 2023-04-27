@@ -93,7 +93,6 @@ function CreateASpot() {
     if (Object.values(validationErrors).length === 0) {
       spotId = await dispatch(spotActions.createSpotDB(spotInfo, imageInfo))
 
-      console.log('spotId from db', spotId)
       // redirect to new spot's detail page
       history.push(`/spots/${spotId}`)
     }

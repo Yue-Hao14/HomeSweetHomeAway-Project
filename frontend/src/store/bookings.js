@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // action type
 const GET_USER_BOOKINGS = 'bookings/getUserBookings';
 const GET_SPOT_BOOKINGS = 'bookings/getSpotBookings';
+const ADD_SPOT_BOOKING = 'bookings/addSpotBooking';
 
 // action creators
 const getUserBookings = (bookings) => {
@@ -19,26 +20,44 @@ const getSpotBookings = (bookings) => {
   }
 }
 
+const addSpotBookings = (booking) => {
+  return {
+    type: ADD_SPOT_BOOKING,
+    booking
+  }
+}
+
 //------------------------------------------------------------------
 // thunks
 // get all of current user's bookings
 export const getUserBookingsDB = () => async (dispatch) => {
-  const reponse = await csrfFetch('/api/bookings/current')
+  const reponse = await csrfFetch('/api/bookings/current');
   const bookings = await reponse.json();
   // console.log("bookings in thunk", bookings)
-  dispatch(getUserBookings(bookings))
-  return
+  dispatch(getUserBookings(bookings));
+  return;
 }
 
 // get current spot's bookings
 export const getSpotBookingsDB = (spotId) => async (dispatch) => {
-  const reponse = await csrfFetch(`/api/spots/${spotId}/bookings`)
+  const reponse = await csrfFetch(`/api/spots/${spotId}/bookings`);
   const bookings = await reponse.json();
-  // console.log("spotBookings in thunk", bookings)
-  dispatch(getSpotBookings(bookings))
-  return
+  console.log("spotBookings in thunk", bookings)
+  dispatch(getSpotBookings(bookings));
+  return;
 }
 
+export const addSpotBookingDB = (spotId, newBooking) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(newBooking)
+  });
+  const bookings = await response.json();
+  console.log("bookings in addSpotBookingDB", bookings)
+  dispatch(addSpotBookings(bookings));
+  return;
+}
 
 
 //------------------------------------------------------------------
@@ -62,6 +81,10 @@ const bookingReducer = (state = initialState, action) => {
         spotBookings[booking.id] = booking;
       });
       newState.spotBookings = spotBookings;
+      return newState;
+    case ADD_SPOT_BOOKING:
+      newState = {...state};
+      newState.spotBookings[action.booking.id] = action.booking;
       return newState;
     default:
       return state;
