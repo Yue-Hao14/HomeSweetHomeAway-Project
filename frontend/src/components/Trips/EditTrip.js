@@ -7,6 +7,7 @@ import parseISO from 'date-fns/parseISO'
 import { addDays, eachDayOfInterval } from 'date-fns'
 import { DateRange } from 'react-date-range'
 import { calculateNights } from '../../utils/DateFunctions'
+import './EditTrip.css'
 
 function EditTrip() {
   const dispatch = useDispatch();
@@ -19,9 +20,6 @@ function EditTrip() {
     booking = booking[bookingId];
     spot = booking.Spot
   }
-  console.log("booking", booking)
-  console.log("spot", spot)
-  console.log("spotId", spotId)
 
   const [disabledDates, setDisabledDates] = useState([]);
   const [open, setOpen] = useState(false);
@@ -33,7 +31,6 @@ function EditTrip() {
       key: 'selection'
     }
   ]);
-  // console.log("startDate", range[0].startDate)
 
   // get the target element to toggle
   const refOne = useRef(null);
@@ -90,9 +87,6 @@ function EditTrip() {
       setOpen(false)
     }
   }
-  console.log("isLoaded", isLoaded)
-  console.log("range", range)
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,15 +106,25 @@ function EditTrip() {
   }
 
   return (
-    <>
+    <div className='edit-trip-container'>
+      <h1>Edit Trip</h1>
       {isLoaded &&
         <div className='change-reservation-container'>
           <div className='change-reservation-spot-name'>{spot?.name}</div>
-          <div className='change-reservation-spot-address'>{spot?.address} {spot?.city} {spot?.state}</div>
+          <div className='change-reservation-spot-address-container'>
+            <div className='change-reservation-spot-address-label'>Address:</div>
+            <div className='change-reservation-spot-address'>{spot?.address} {spot?.city} {spot?.state}</div>
+          </div>
+          <div className='change-reservation-spot-price-container'>
+          <div className='change-reservation-spot-price-label'>Cost per night:</div>
           <div className='change-reservation-spot-price'>${spot?.price} night</div>
+          </div>
           <div className='change-reservation-spot-current-reservation-container'>
-            <div className='current-reservation-label'>Current reservation</div>
+            <div className='current-reservation-label'>Current reservation:</div>
             <div className='current-reservation-dates'>{booking?.startDate.slice(0, 10)} to {booking?.endDate.slice(0, 10)}</div>
+          </div>
+          <div className='change-reservation-spot-current-cost-container'>
+            <div className='current-cost-label'>Current cost:</div>
             <div className='current-reservation-costs'>${(spot.price * calculateNights(parseISO(booking.startDate), parseISO(booking.endDate))).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
           </div>
           <div className='checkin-checkout-date-container'>
@@ -165,7 +169,7 @@ function EditTrip() {
           <button className='reserve activated' onClick={handleSubmit}>Change Reservation</button>
         </div>
       }
-    </>
+    </div>
   )
 }
 
