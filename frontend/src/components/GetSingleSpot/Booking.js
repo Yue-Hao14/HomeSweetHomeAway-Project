@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { DateRange } from 'react-date-range'
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
-import intervalToDuration from 'date-fns/intervalToDuration'
 import { addDays, eachDayOfInterval } from 'date-fns'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { addSpotBookingDB, getSpotBookingsDB } from '../../store/bookings'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { calculateNights } from '../../utils/DateFunctions'
 
 
 function Booking() {
@@ -153,12 +153,3 @@ function Booking() {
 }
 
 export default Booking;
-
-
-function calculateNights(startDate, endDate) {
-  const interval = intervalToDuration({
-    start: startDate,
-    end: endDate
-  });
-  return interval.days
-}

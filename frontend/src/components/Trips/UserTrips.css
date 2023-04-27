@@ -1,7 +1,39 @@
 .trip-container {
   display: flex;
+  justify-content: space-between;
   border: 1px solid lightgray;
   border-radius: 20px;
   margin: 10px;
-  padding: 10px;
+  padding: 30px 50px;
+}
+
+.trip-left-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-spot-name {
+  font-size: 40px;
+  padding: 20px;
+}
+
+.trip-date,
+.trip-address {
+  font-size: 18px;
+  color: gray;
+  padding: 5px 20px;
+}
+
+.trip-address {
+  margin-bottom: 30px;
+}
+
+.change-reservation,
+.cancel-reservation {
+  width: 95%;
+  cursor: pointer;
+}
+
+.trip-right-container img {
+  width: 40vw;
 }
