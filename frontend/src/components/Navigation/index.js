@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
     <div className='navigation'>
       <div className='logo'>
         <NavLink exact to="/">
-          <i class="fa-solid fa-house" />
+          <i className="fa-solid fa-house" />
           <span>HomeSweetHomeAway</span>
         </NavLink>
       </div>

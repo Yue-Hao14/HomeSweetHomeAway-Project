@@ -1079,6 +1079,7 @@ Return all the bookings for a spot specified by id.
     {
       "Bookings": [
         {
+          "id": 1,
           "spotId": 1,
           "startDate": "2021-11-19",
           "endDate": "2021-11-20"
