@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import PostReviewModal from "../GetSingleSpot/PostReviewModal";
 import DeleteReviewModal from './DeleteReviewModal';
-import { Calendar } from 'react-date-range';
+import Booking from './Booking';
 
 function GetSingleSpot() {
 
@@ -90,7 +90,7 @@ function GetSingleSpot() {
           <div className='other-spot-images-container'>
             {
               singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
-                return <img className='other-spot-images' src={image.url} alt="spot"></img>
+                return <img className='other-spot-images' src={image.url} alt="spot" key={image.id}></img>
               })
             }
           </div>
@@ -104,23 +104,20 @@ function GetSingleSpot() {
             <div className='price-rating-review'>
               <div><span id='price'>${singleSpot.price}</span> night</div>
               <div className='rating-review'>
-                <i class="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
                 {singleSpot.avgStarRating === null ? "New" : Number(singleSpot.avgStarRating).toFixed(2)}
                 {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
               </div>
             </div>
             <div className='reservation-container'>
-            <Calendar
-            date={new Date()}
-            />
-            <button className='reserve activated' onClick={handleClick}>Reserve</button>
+              <Booking />
             </div>
           </div>
         </div>
 
         <div className='review-session-container'>
           <div className='rating-review' id="rating-review-bigger">
-            <i class="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
             {singleSpot.avgStarRating === null ? "New" : Number(singleSpot.avgStarRating).toFixed(2)}
             {singleSpot.numReviews === 0 ? "" : " - ".concat(singleSpot.numReviews, " ", singleSpot.numReviews === 1 ? "review" : "reviews")}
           </div>
@@ -149,7 +146,7 @@ function GetSingleSpot() {
                 spotId: review.spotId
               }
               return (
-                <div className='single-review-container'>
+                <div className='single-review-container' key={review.id}>
                   <div id="firstName">{review.User.firstName}</div>
                   <div className='created-at'>{review.createdAt.split('T')[0]}</div>
                   <div id="review-content">{review.review}</div>

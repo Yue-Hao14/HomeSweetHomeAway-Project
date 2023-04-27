@@ -15,7 +15,7 @@ function GetTrips() {
     dispatch(bookingActions.getUserBookingsDB())
   }, [dispatch])
 
-  console.log(trips)
+  // console.log(trips)
 
   return (
     <>
