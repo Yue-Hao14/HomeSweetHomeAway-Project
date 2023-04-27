@@ -39,7 +39,7 @@ function App() {
           <Route path="/spots/:spotId">
             <GetSingleSpot />
           </Route>
-          <Route path="/trips/:bookingId/edit">
+          <Route path="/trips/:bookingId/:spotId/edit">
             <EditTrip />
           </Route>
           <Route path="/trips">

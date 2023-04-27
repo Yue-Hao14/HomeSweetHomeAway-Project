@@ -117,13 +117,14 @@ outline: 1px solid black;
   background-color: rgb(84, 83, 83);
   color: white;
   height: 40px;
-  width: 10%;
+  width: 15%;
   border-radius: 10px;
   font-size: 15px;
   cursor: pointer;
-  position: fixed;
+  position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: 0px;
+  margin-bottom: -20px;
   border: none;
 }
 

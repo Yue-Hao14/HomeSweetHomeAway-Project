@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_USER_BOOKINGS = 'bookings/getUserBookings';
 const GET_SPOT_BOOKINGS = 'bookings/getSpotBookings';
 const ADD_SPOT_BOOKING = 'bookings/addSpotBooking';
+const UPDATE_SPOT_BOOKING = 'bookings/updateSpotBooking';
 
 // action creators
 const getUserBookings = (bookings) => {
@@ -20,9 +21,16 @@ const getSpotBookings = (bookings) => {
   }
 }
 
-const addSpotBookings = (booking) => {
+const addSpotBooking = (booking) => {
   return {
     type: ADD_SPOT_BOOKING,
+    booking
+  }
+}
+
+const updateSpotBooking = (booking) => {
+  return {
+    type: UPDATE_SPOT_BOOKING,
     booking
   }
 }
@@ -47,18 +55,30 @@ export const getSpotBookingsDB = (spotId) => async (dispatch) => {
   return;
 }
 
+// add a new booking
 export const addSpotBookingDB = (spotId, newBooking) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newBooking)
   });
-  const bookings = await response.json();
-  console.log("bookings in addSpotBookingDB", bookings)
-  dispatch(addSpotBookings(bookings));
+  const booking = await response.json();
+  // console.log("bookings in addSpotBookingDB", bookings)
+  dispatch(addSpotBooking(booking));
   return;
 }
 
+// update an existing booking
+export const updateSpotBookingDB = (bookingId, updatedBooking) => async (dispatch) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedBooking)
+  });
+  const booking = await response.json();
+  dispatch(updateSpotBooking(booking));
+  return;
+}
 
 //------------------------------------------------------------------
 // reducer
@@ -83,7 +103,11 @@ const bookingReducer = (state = initialState, action) => {
       newState.spotBookings = spotBookings;
       return newState;
     case ADD_SPOT_BOOKING:
-      newState = {...state};
+      newState = { ...state };
+      newState.spotBookings[action.booking.id] = action.booking;
+      return newState;
+    case UPDATE_SPOT_BOOKING:
+      newState = { ...state };
       newState.spotBookings[action.booking.id] = action.booking;
       return newState;
     default:

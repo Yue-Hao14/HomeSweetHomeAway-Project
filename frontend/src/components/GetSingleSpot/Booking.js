@@ -13,14 +13,13 @@ import { calculateNights } from '../../utils/DateFunctions'
 
 function Booking() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { spotId } = useParams();
   const spotBookingsObj = useSelector(state => state.bookings.spotBookings);
   const singleSpot = useSelector(state => state.spots.singleSpot)
 
   // get the target element to toggle
   const refOne = useRef(null);
-
-  const history = useHistory();
 
   const [disabledDates, setDisabledDates] = useState([]);
   const [open, setOpen] = useState(false);
@@ -32,6 +31,10 @@ function Booking() {
     }
   ]);
 
+  // hydrate redux store with spotBooking
+  useEffect(() => {
+    dispatch(getSpotBookingsDB(spotId));
+  }, [dispatch, spotId])
 
   // put existing booking dates into an array so they can be disabled in the calendar
   useEffect(() => {
@@ -57,11 +60,6 @@ function Booking() {
 
   // console.log("disabledDates",disabledDates)
 
-
-  // hydrate redux store with spotBooking
-  useEffect(() => {
-    dispatch(getSpotBookingsDB(spotId));
-  }, [dispatch, spotId])
 
   // close date selection on ESC and when user click outside
   useEffect(() => {
@@ -90,14 +88,13 @@ function Booking() {
     e.preventDefault();
     const startDate = format(range[0].startDate, "yyyy-MM-dd");
     const endDate = format(range[0].endDate, "yyyy-MM-dd");
-    console.log(startDate, endDate)
+    // console.log(startDate, endDate)
 
     const newBooking = {
       startDate,
       endDate
     }
-    const res = await dispatch(addSpotBookingDB(spotId, newBooking))
-    console.log("res", res)
+    const res = await dispatch(addSpotBookingDB(spotId, newBooking));
 
     // redirect to trips page
     history.push('/trips');
