@@ -13,11 +13,12 @@
 }
 
 .activated {
-  background-color: rgb(242, 87, 31);
+  background-color: #FF385C;
   color: white;
-  height: 2.5rem;
+  height: 3rem;
   margin: 0.5vh;
-  box-shadow: 2px 2px black;
+  border: none;
+  border-radius: 10px;
 }
 
 .deactivated {

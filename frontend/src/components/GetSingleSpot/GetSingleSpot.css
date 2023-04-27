@@ -49,7 +49,7 @@
   border-radius: 5%;
   padding: 1vw;
   height: 50%;
-  width: 30%;
+  width: 25%;
 }
 
 .price-rating-review {
@@ -60,9 +60,84 @@
   margin: 1vh
 }
 
+.checkin-checkout-date-container {
+  display: flex;
+  width: 98%;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 18px;
+}
+
+.checkin-checkout-date-container input,
+.checkin-checkout-date-container label {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.checkin-checkout-date-container label {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 12px;
+  padding: 20px 20px 0px;
+}
+.checkin-checkout-date-container input {
+  font-size: 16px;
+  line-height: 18px;
+  padding: 10px 20px 20px;
+}
+.checkin-checkout-date-container input:focus {
+outline: none;
+}
+.checkin-container,
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  width:50%;
+  cursor: pointer;
+}
+.checkin-container:focus,
+.checkout-container:focus {
+outline: 1px solid black;
+}
+
+.checkin-container {
+  border-right: 1px solid lightgray;
+}
+
+.date-selection-container {
+  position: absolute;
+  right:10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.date-selection-close-button {
+  background-color: rgb(84, 83, 83);
+  color: white;
+  height: 40px;
+  width: 15%;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+  margin-bottom: -20px;
+  border: none;
+}
+
+.estimated-cost-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .reserve {
   width: 100%;
-  height: 50%
+  height: 50%;
+  font-size: 18px;
 }
 
 #price {
@@ -88,8 +163,6 @@
 .single-review-container {
   margin: 2vh 0;
 }
-
-
 
 #delete-review {
   width: 6%;
@@ -117,11 +190,4 @@
 #rating-review-bigger {
   font-size: larger;
   margin: 1rem 0;
-}
-
-.date-selection-container {
-  position: absolute;
-  right:10px;
-  display: flex;
-  flex-direction: column;
 }
