@@ -15,6 +15,7 @@ function CancelReservationModal({ bookingId }) {
     if (response.statusCode !== 200) {
       setError(response.message)
     }
+    closeModal();
   }
 
   return (
