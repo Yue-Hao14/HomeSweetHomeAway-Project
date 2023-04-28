@@ -1,3 +1,8 @@
+.trip-sub-header {
+  margin-left: 15px;
+  margin-top: 50px;
+}
+
 .trip-container {
   display: flex;
   justify-content: space-between;
@@ -29,11 +34,42 @@
 }
 
 .change-reservation,
-.cancel-reservation {
+.cancel-reservation,
+#trip-post-review {
   width: 95%;
   cursor: pointer;
 }
 
 .trip-right-container img {
   width: 40vw;
+}
+
+.cancel-reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cancel-reservation-header div {
+  font-size: 25px;
+  font-weight: bold;
+}
+.cancel-reservation-header button {
+  background: none;
+  border:none;
+  font-size: 25px;
+}
+
+.cancel-reservation-message {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.confirm-button-container {
+  display: flex;
+  justify-content: center;
+}
+.confirm-button {
+  width: 100px;
 }

@@ -22,15 +22,18 @@ function CancelReservationModal({ bookingId }) {
     <div className="cancel-reservation-container">
       <div className="cancel-reservation-header">
         <div>Cancel Reservation</div>
-        <button onClick={closeModal}>X</button>
+        <button onClick={closeModal}>x</button>
       </div>
       {error &&
         <div className="cancel-reservation-error">{error}</div>
       }
       <div className="cancel-reservation-message">
-        <div>Are you sure you want to cancel this reservation?</div>
+        Are you sure you want to cancel this reservation?
       </div>
-      <button onClick={handleCancelReservation}>Cancel Reservation</button>
+      <div className="confirm-button-container">
+
+      <button onClick={handleCancelReservation} className="activated confirm-button">Confirm</button>
+      </div>
     </div>
   )
 }
