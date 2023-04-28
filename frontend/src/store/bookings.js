@@ -80,6 +80,19 @@ export const updateSpotBookingDB = (bookingId, updatedBooking) => async (dispatc
   return;
 }
 
+// delete a booking
+export const deleteSpotBookingDB = (bookingId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "DELETE",
+  });
+  console.log(response)
+  const message = await response.json();
+  if (message.statusCode < 400) {
+    dispatch(getUserBookingsDB());
+    return message
+  } else return message;
+}
+
 //------------------------------------------------------------------
 // reducer
 const initialState = {};

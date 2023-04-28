@@ -1,0 +1,51 @@
+.edit-trip-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.change-reservation-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.change-reservation-spot-name {
+  font-size: 40px;
+  margin-bottom: 20px;
+  padding: 0px 5px;
+}
+
+.change-reservation-spot-address-container,
+.change-reservation-spot-price-container,
+.change-reservation-spot-current-reservation-container,
+.change-reservation-spot-current-cost-container,
+.estimated-cost-container {
+  font-size: 18px;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.change-reservation-spot-current-reservation-container,
+.change-reservation-spot-current-cost-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.change-reservation-date-selection-container {
+  /* position: absolute; */
+  align-items:flex-end;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.change-reservation-date-selection-close-button {
+  background-color: rgb(84, 83, 83);
+  color: white;
+  height: 40px;
+  width: 15%;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
