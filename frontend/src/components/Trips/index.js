@@ -67,7 +67,7 @@ function GetTrips() {
             </button>
           </div>
           <div className='trip-right-container'>
-            <img src={trip.Spot.previewImage} alt="spot" />
+            <img src={trip.Spot.previewImage} alt="spot" onClick={()=> history.push(`/spots/${trip.spotId}`)} style={{cursor: 'pointer'}} />
           </div>
         </div>
       ))}
