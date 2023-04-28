@@ -31,3 +31,21 @@
   display: flex;
   justify-content: space-between;
 }
+
+.change-reservation-date-selection-container {
+  /* position: absolute; */
+  align-items:flex-end;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.change-reservation-date-selection-close-button {
+  background-color: rgb(84, 83, 83);
+  color: white;
+  height: 40px;
+  width: 15%;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}

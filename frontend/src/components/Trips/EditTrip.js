@@ -148,7 +148,7 @@ function EditTrip() {
             </div>
           </div>
           {open &&
-            <div className='date-selection-container' ref={refOne}>
+            <div className='change-reservation-date-selection-container' ref={refOne}>
               <DateRange
                 editableDateInputs={true}
                 onChange={item => setRange([item.selection])}
@@ -159,7 +159,7 @@ function EditTrip() {
                 direction="horizontal"
                 disabledDates={disabledDates}
               />
-              <button className="date-selection-close-button" onClick={() => setOpen(false)}>Close</button>
+              <button className="change-reservation-date-selection-close-button" onClick={() => setOpen(false)}>Close</button>
             </div>
           }
           <div className='estimated-cost-container'>
