@@ -296,7 +296,7 @@ function EditSpotForm({ spot }) {
         </div> */}
         <div className='update-spot-button-container'>
 
-          <button className='activated' id="update-spot">Update your Spot</button>
+          <button className='activated' id="edit-spot">Update your Spot</button>
         </div>
       </form >
     </div >
