@@ -83,8 +83,8 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: {
-        [Op.in]: ['111','222','333']
+      address: {
+        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road']
       }
     }, {});
   }
