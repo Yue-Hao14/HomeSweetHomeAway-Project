@@ -138,6 +138,7 @@ outline: 1px solid black;
   width: 100%;
   height: 50%;
   font-size: 18px;
+  cursor: pointer;
 }
 
 #price {

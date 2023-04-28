@@ -295,7 +295,6 @@ function EditSpotForm({ spot }) {
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
         </div> */}
         <div className='update-spot-button-container'>
-
           <button className='activated' id="edit-spot">Update your Spot</button>
         </div>
       </form >
