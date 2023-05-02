@@ -154,7 +154,7 @@ function CreateASpot() {
             {hasSubmitted && validationErrors.emptyLatitude && (<div className='error'>{validationErrors.emptyLatitude}</div>)}
             <input
               id="latitude"
-              type="text"
+              type="number"
               onChange={e => setLatitude(e.target.value)}
               value={latitude}
               placeholder="Latitude" />
@@ -164,7 +164,7 @@ function CreateASpot() {
             {hasSubmitted && validationErrors.emptyLongitude && (<div className='error'>{validationErrors.emptyLongitude}</div>)}
             <input
               id="longitude"
-              type="text"
+              type="number"
               onChange={e => setLongitude(e.target.value)}
               value={longitude}
               placeholder="Longitude" />
