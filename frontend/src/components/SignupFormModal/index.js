@@ -1,5 +1,5 @@
 // frontend/src/components/SignupFormPage/index.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -14,12 +14,24 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { closeModal } = useModal();
+
+  // error handling
+  useEffect(() => {
+    let errorArray = [];
+    if (!email.includes("@")) errorArray.push('Please provide a valid email');
+    if (username.length < 4) errorArray.push('Username must be at least 4 characters');
+    if (password.length < 6) errorArray.push('Password must be at least 6 characters');
+    if (password !== confirmPassword) errorArray.push('Confirm Password field must be the same as the Password field');
+    setErrors(errorArray);
+  }, [password, confirmPassword, username, email])
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
+    setHasSubmitted(true);
+
+    if (errors.length === 0) {
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
         .then(closeModal)
         .catch(async (res) => {
@@ -27,7 +39,6 @@ function SignupFormModal() {
           if (data && data.errors) setErrors(data.errors);
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
   return (
@@ -35,7 +46,7 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
         <div>
-          {errors.map((error, idx) => <div className="error" key={idx}>{error}</div>)}
+          {hasSubmitted && errors.length > 0 &&errors.map((error, idx) => <li className="error" key={idx}>{error}</li>)}
         </div>
         <label>
           Email
@@ -93,13 +104,7 @@ function SignupFormModal() {
         </label>
         <button type="submit"
         className="activated"
-        disabled={email.length === 0 ||
-        username.length < 4 ||
-        firstName.length === 0 ||
-        lastName.length === 0 ||
-        password.length < 6 ||
-        confirmPassword.length === 0 ||
-        confirmPassword !== password}>Sign Up</button>
+        >Sign Up</button>
       </form>
     </>
   );
