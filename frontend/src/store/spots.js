@@ -67,7 +67,7 @@ export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
   })
   const newSpot = await response.json();
 
-  console.log('newSpot in thunk from db', newSpot)
+  // console.log('newSpot in thunk from db', newSpot)
   const spotId = newSpot.id
 
   // initiate createSpotImageDB thunk to
