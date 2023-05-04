@@ -51,7 +51,7 @@ export const getSingleSpotDB = (spotId) => async (dispatch) => {
 export const getCurrentUserSpotsDB = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots/current');
   const spots = await response.json();
-    // console.log('spot in thunk from db', spots)
+  // console.log('spot in thunk from db', spots)
   dispatch(getSpots(spots));
 }
 
@@ -77,41 +77,66 @@ export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
 }
 
 
-// add spot image thunk
+// add spot image thunk to AWS S3
 export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
   // put all image urls into an array
   const imageArr = Object.values(imageInfo);
-  // remove/take out first image url which is the previewImage url
-  const previewImageUrl = imageArr.shift()
-  const previewImageObj = {
-    url:previewImageUrl,
-    preview: true
-  }
-  // add preview image to db
-  await csrfFetch(`/api/spots/${spotId}/images`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(previewImageObj)
-  })
+  const formData = new FormData();
 
-  //take care of the rest of spot images
-  imageArr.forEach(async (url) => {
+  //append spot images to formData
+  imageArr.forEach((url) => {
     if (url.length > 0) {
-      await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          url,
-          preview: false
-        })
-      })
+      formData.append('image', url)
     }
   })
+
+  const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: formData
+  })
+  if (!imageResponse.ok) {
+    throw new Error('Error uploading image');
+  }
 }
+
+
+// export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
+//   // put all image urls into an array
+//   const imageArr = Object.values(imageInfo);
+//   // remove/take out first image url which is the previewImage url
+//   const previewImageUrl = imageArr.shift()
+//   const previewImageObj = {
+//     url: previewImageUrl,
+//     preview: true
+//   }
+//   // add preview image to db
+//   await csrfFetch(`/api/spots/${spotId}/images`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(previewImageObj)
+//   })
+
+//   //take care of the rest of spot images
+//   imageArr.forEach(async (url) => {
+//     if (url.length > 0) {
+//       await csrfFetch(`/api/spots/${spotId}/images`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//           url,
+//           preview: false
+//         })
+//       })
+//     }
+//   })
+// }
 
 
 // update spot info in db
@@ -168,7 +193,7 @@ const spotReducer = (state = initialState, action) => {
       // console.log('singleSpot newState in reducer', newState)
       return newState;
     case CLEAR_SINGLE_SPOT:
-      return {...state, singleSpot: null}
+      return { ...state, singleSpot: null }
     default:
       return state;
   }

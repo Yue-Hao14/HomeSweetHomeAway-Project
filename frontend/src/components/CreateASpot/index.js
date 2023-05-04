@@ -78,7 +78,7 @@ function CreateASpot() {
       description,
       price
     }
-    console.log('spotInfo', spotInfo)
+    // console.log('spotInfo', spotInfo)
 
     const imageInfo = {
       previewImage,
@@ -87,7 +87,7 @@ function CreateASpot() {
       otherImage3,
       otherImage4
     }
-    console.log('imageInfo', imageInfo)
+    // console.log('imageInfo', imageInfo)
 
     let spotId = ""
     if (Object.values(validationErrors).length === 0) {
@@ -214,7 +214,8 @@ function CreateASpot() {
           <div>Submit a link to at least one photo to publish your spot.</div>
           <input
             id="previewImage"
-            type="text"
+            type="file"
+            accept="image/*"
             onChange={e => setPreviewImage(e.target.value)}
             value={previewImage}
             placeholder="Preview Image URL" />
@@ -223,28 +224,32 @@ function CreateASpot() {
           {hasSubmitted && !validationErrors.emptyPreviewImage && validationErrors.badPreviewImage && (<div className='error'>{validationErrors.badPreviewImage}</div>)}
           <input
             id="otherImage1"
-            type="text"
+            type="file"
+            accept="image/*"
             onChange={e => setOtherImage1(e.target.value)}
             value={otherImage1}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage1 && (<div className='error'>{validationErrors.badOtherImage1}</div>)}
           <input
             id="otherImage2"
-            type="text"
+            type="file"
+            accept="image/*"
             onChange={e => setOtherImage2(e.target.value)}
             value={otherImage2}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage2 && (<div className='error'>{validationErrors.badOtherImage2}</div>)}
           <input
             id="otherImage3"
-            type="text"
+            type="file"
+            accept="image/*"
             onChange={e => setOtherImage3(e.target.value)}
             value={otherImage3}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage3 && (<div className='error'>{validationErrors.badOtherImage3}</div>)}
           <input
             id="otherImage4"
-            type="text"
+            type="file"
+            accept="image/*"
             onChange={e => setOtherImage4(e.target.value)}
             value={otherImage4}
             placeholder="Image URL" />
