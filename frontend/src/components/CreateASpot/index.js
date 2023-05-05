@@ -214,6 +214,7 @@ function CreateASpot() {
           <div>Submit a link to at least one photo to publish your spot.</div>
           <input
             id="previewImage"
+            className='spot-image-input'
             type="file"
             accept="image/*"
             onChange={e => setPreviewImage(e.target.value)}
@@ -224,6 +225,7 @@ function CreateASpot() {
           {hasSubmitted && !validationErrors.emptyPreviewImage && validationErrors.badPreviewImage && (<div className='error'>{validationErrors.badPreviewImage}</div>)}
           <input
             id="otherImage1"
+            className='spot-image-input'
             type="file"
             accept="image/*"
             onChange={e => setOtherImage1(e.target.value)}
@@ -232,6 +234,7 @@ function CreateASpot() {
           {hasSubmitted && validationErrors.badOtherImage1 && (<div className='error'>{validationErrors.badOtherImage1}</div>)}
           <input
             id="otherImage2"
+            className='spot-image-input'
             type="file"
             accept="image/*"
             onChange={e => setOtherImage2(e.target.value)}
@@ -240,6 +243,7 @@ function CreateASpot() {
           {hasSubmitted && validationErrors.badOtherImage2 && (<div className='error'>{validationErrors.badOtherImage2}</div>)}
           <input
             id="otherImage3"
+            className='spot-image-input'
             type="file"
             accept="image/*"
             onChange={e => setOtherImage3(e.target.value)}
@@ -248,6 +252,7 @@ function CreateASpot() {
           {hasSubmitted && validationErrors.badOtherImage3 && (<div className='error'>{validationErrors.badOtherImage3}</div>)}
           <input
             id="otherImage4"
+            className='spot-image-input'
             type="file"
             accept="image/*"
             onChange={e => setOtherImage4(e.target.value)}
