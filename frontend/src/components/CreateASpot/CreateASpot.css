@@ -21,17 +21,18 @@
   display: flex;
   flex-direction: column;
 }
+.label-input input,
+.session-container input,
+.session-container textarea {
+  background: none;
+}
 
 .error {
   color: red;
 }
 
-input {
-  background-color: rgb(220, 230, 247);
-}
-
-textarea {
-  background-color: rgb(220, 230, 247);
+.spot-image-input {
+  border:1px solid black;
 }
 
 .session-container>div {
