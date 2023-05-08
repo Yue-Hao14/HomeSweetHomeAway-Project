@@ -57,7 +57,7 @@ export const getCurrentUserSpotsDB = () => async (dispatch) => {
 
 
 // create a spot thunk
-export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
+export const createSpotDB = (spotInfo, formData) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots`, {
     method: "POST",
     headers: {
@@ -72,24 +72,14 @@ export const createSpotDB = (spotInfo, imageInfo) => async (dispatch) => {
 
   // initiate createSpotImageDB thunk to
   // add spot images to DB and redux store
-  await dispatch(createSpotImageDB(spotId, imageInfo))
+  await dispatch(createSpotImageDB(spotId, formData))
   return spotId;
 }
 
 
 // add spot image thunk to AWS S3
-export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
-  // put all image urls into an array
-  const imageArr = Object.values(imageInfo);
-  const formData = new FormData();
-
-  //append spot images to formData
-  imageArr.forEach((url) => {
-    if (url.length > 0) {
-      formData.append('image', url)
-    }
-  })
-
+export const createSpotImageDB = (spotId, formData) => async (dispatch) => {
+  console.log('formData in thunk from db', formData)
   const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: {
@@ -97,6 +87,8 @@ export const createSpotImageDB = (spotId, imageInfo) => async (dispatch) => {
     },
     body: formData
   })
+  const imageResponseJSON = await imageResponse.json();
+  console.log('imageResponseJSON in thunk from db', imageResponseJSON)
   if (!imageResponse.ok) {
     throw new Error('Error uploading image');
   }

@@ -4,7 +4,7 @@ const spot = require('../../db/models/spot');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
 const { Op } = require('sequelize');
-const {multipleMulterUpload, multiplePublicFileUpload } = require("../../aws");
+const {multipleMulterUpload, multiplePublicFileUpload } = require("../../awsS3");
 
 // ------------------------------------------------------
 // Get spots of current user
@@ -411,12 +411,12 @@ router.get('/', async (req, res, _next) => {
 // Add an Image to a Spot based on the Spot's id to AWS S3
 router.post('/:spotId/images', restoreUser, multipleMulterUpload("images"), async (req, res, _next) => {
   const images = await multiplePublicFileUpload(req.files);
-  const { preview } = req.body;
+
     // Save each image to the database
     for (let i = 0; i < images.length; i++) {
         const newImage = {
             url: images[i], // AWS S3 URL of the image
-            preview,
+            preview: i === 0 ? true : false, // Set preview based on the image location in the array
             spotId: req.params.spotId,
         };
         await SpotImage.create(newImage);

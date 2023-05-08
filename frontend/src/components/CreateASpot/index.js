@@ -38,22 +38,12 @@ function CreateASpot() {
     if (!(description.length >= 30)) errors.shortDescription = "Description needs a minimum of 30 characters";
     if (!name.length > 0) errors.emptyName = "Name is required";
     if (!price.length) errors.emptyPrice = "Price is required";
-    // if (!Object.values(images).length > 0) errors.noPreviewImage = "Preview image is required";
-    // if (Object.values(images).length > 0) {
-    //   for (let i = 0; i < Object.values(images).length; i++) {
-    //     const image = Object.values(images)[i];
-    //     if (!image.endsWith('jpg') && !image.endsWith('png') && !image.endsWith('jpeg')) {
-    //       errors[`badImage${i}`] = "Image URL must end in .png, .jpg, or .jpeg"
-    //     }
-    //   }
-    // }
-    if (!previewImage.length > 0) errors.emptyPreviewImage = "Preview image is required";
-    if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
-    // console.log('previewImage', previewImage.endsWith('jpg'))
-    if (otherImage1 && (!otherImage1.endsWith('.png') && !otherImage1.endsWith('.jpg') && !otherImage1.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage2 && (!otherImage2.endsWith('.png') && !otherImage2.endsWith('.jpg') && !otherImage2.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage3 && (!otherImage3.endsWith('.png') && !otherImage3.endsWith('.jpg') && !otherImage3.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
-    if (otherImage4 && (!otherImage4.endsWith('.png') && !otherImage4.endsWith('.jpg') && !otherImage4.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (!previewImage.name?.length > 0) errors.emptyPreviewImage = "Preview image is required";
+    if (!previewImage.name?.endsWith('.png') && !previewImage.name?.endsWith('.jpg') && !previewImage.name?.endsWith('.jpeg')) errors.badPreviewImage = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage1 && (!otherImage1.name?.endsWith('.png') && !otherImage1.name?.endsWith('.jpg') && !otherImage1.name?.endsWith('.jpeg'))) errors.badOtherImage1 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage2 && (!otherImage2.name?.endsWith('.png') && !otherImage2.name?.endsWith('.jpg') && !otherImage2.name?.endsWith('.jpeg'))) errors.badOtherImage2 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage3 && (!otherImage3.name?.endsWith('.png') && !otherImage3.name?.endsWith('.jpg') && !otherImage3.name?.endsWith('.jpeg'))) errors.badOtherImage3 = "Image URL must end in .png, .jpg, or .jpeg"
+    if (otherImage4 && (!otherImage4.name?.endsWith('.png') && !otherImage4.name?.endsWith('.jpg') && !otherImage4.name?.endsWith('.jpeg'))) errors.badOtherImage4 = "Image URL must end in .png, .jpg, or .jpeg"
 
     // set the errors obj to validationError state variable
     setValidationErrors(errors);
@@ -65,7 +55,6 @@ function CreateASpot() {
     e.preventDefault();
 
     setHasSubmitted(true);
-    // console.log('handleSubmitted fired')
 
     const spotInfo = {
       address,
@@ -80,27 +69,28 @@ function CreateASpot() {
     }
     // console.log('spotInfo', spotInfo)
 
-    const imageInfo = {
-      previewImage,
-      otherImage1,
-      otherImage2,
-      otherImage3,
-      otherImage4
-    }
-    // console.log('imageInfo', imageInfo)
+    const formData = new FormData();
+    console.log('previewImage in handleSubmit', previewImage)
+    console.log('otherImage1 in handleSubmit', otherImage1)
+    console.log('otherImage2 in handleSubmit', otherImage2)
+    console.log('otherImage3 in handleSubmit', otherImage3)
+
+    if (previewImage) formData.append('images', previewImage)
+    if (otherImage1) formData.append('images', otherImage1)
+    if (otherImage2) formData.append('images', otherImage2)
+    if (otherImage3) formData.append('images', otherImage3)
+    if (otherImage4) formData.append('images', otherImage4)
+    console.log('formData', formData)
 
     let spotId = ""
     if (Object.values(validationErrors).length === 0) {
-      spotId = await dispatch(spotActions.createSpotDB(spotInfo, imageInfo))
+      spotId = await dispatch(spotActions.createSpotDB(spotInfo, formData))
 
       // redirect to new spot's detail page
       history.push(`/spots/${spotId}`)
     }
 
   }
-
-  // // create an imagesObj to hold all the urls so I can set imagesObj as images state variable
-  // let imagesObj = {};
 
   return (
     <div className='outer-container'>
@@ -217,8 +207,7 @@ function CreateASpot() {
             className='spot-image-input'
             type="file"
             accept="image/*"
-            onChange={e => setPreviewImage(e.target.value)}
-            value={previewImage}
+            onChange={e => setPreviewImage(e.target.files[0])}
             placeholder="Preview Image URL" />
           {hasSubmitted && validationErrors.emptyPreviewImage && (<div className='error'>{validationErrors.emptyPreviewImage}</div>)}
           {/* {console.log('validationError in JSX', validationErrors)} */}
@@ -228,7 +217,7 @@ function CreateASpot() {
             className='spot-image-input'
             type="file"
             accept="image/*"
-            onChange={e => setOtherImage1(e.target.value)}
+            onChange={e => setOtherImage1(e.target.files[0])}
             value={otherImage1}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage1 && (<div className='error'>{validationErrors.badOtherImage1}</div>)}
@@ -237,7 +226,7 @@ function CreateASpot() {
             className='spot-image-input'
             type="file"
             accept="image/*"
-            onChange={e => setOtherImage2(e.target.value)}
+            onChange={e => setOtherImage2(e.target.files[0])}
             value={otherImage2}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage2 && (<div className='error'>{validationErrors.badOtherImage2}</div>)}
@@ -246,7 +235,7 @@ function CreateASpot() {
             className='spot-image-input'
             type="file"
             accept="image/*"
-            onChange={e => setOtherImage3(e.target.value)}
+            onChange={e => setOtherImage3(e.target.files[0])}
             value={otherImage3}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage3 && (<div className='error'>{validationErrors.badOtherImage3}</div>)}
@@ -255,7 +244,7 @@ function CreateASpot() {
             className='spot-image-input'
             type="file"
             accept="image/*"
-            onChange={e => setOtherImage4(e.target.value)}
+            onChange={e => setOtherImage4(e.target.files[0])}
             value={otherImage4}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
