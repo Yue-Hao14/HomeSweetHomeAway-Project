@@ -79,7 +79,6 @@ export const createSpotDB = (spotInfo, formData) => async (dispatch) => {
 
 // add spot image thunk to AWS S3
 export const createSpotImageDB = (spotId, formData) => async (dispatch) => {
-  console.log('formData in thunk from db', formData)
   const imageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: {
@@ -87,11 +86,10 @@ export const createSpotImageDB = (spotId, formData) => async (dispatch) => {
     },
     body: formData
   })
-  const imageResponseJSON = await imageResponse.json();
-  console.log('imageResponseJSON in thunk from db', imageResponseJSON)
-  if (!imageResponse.ok) {
-    throw new Error('Error uploading image');
-  }
+  // const imageResponseJSON = await imageResponse.json();
+  // if (!imageResponse.ok) {
+  //   throw new Error('Error uploading image');
+  // }
 }
 
 
