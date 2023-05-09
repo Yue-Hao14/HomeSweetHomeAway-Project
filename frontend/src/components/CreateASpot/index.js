@@ -70,17 +70,13 @@ function CreateASpot() {
     // console.log('spotInfo', spotInfo)
 
     const formData = new FormData();
-    console.log('previewImage in handleSubmit', previewImage)
-    console.log('otherImage1 in handleSubmit', otherImage1)
-    console.log('otherImage2 in handleSubmit', otherImage2)
-    console.log('otherImage3 in handleSubmit', otherImage3)
 
     if (previewImage) formData.append('images', previewImage)
     if (otherImage1) formData.append('images', otherImage1)
     if (otherImage2) formData.append('images', otherImage2)
     if (otherImage3) formData.append('images', otherImage3)
     if (otherImage4) formData.append('images', otherImage4)
-    console.log('formData', formData)
+
 
     let spotId = ""
     if (Object.values(validationErrors).length === 0) {
@@ -89,7 +85,6 @@ function CreateASpot() {
       // redirect to new spot's detail page
       history.push(`/spots/${spotId}`)
     }
-
   }
 
   return (
@@ -218,7 +213,6 @@ function CreateASpot() {
             type="file"
             accept="image/*"
             onChange={e => setOtherImage1(e.target.files[0])}
-            value={otherImage1}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage1 && (<div className='error'>{validationErrors.badOtherImage1}</div>)}
           <input
@@ -227,7 +221,6 @@ function CreateASpot() {
             type="file"
             accept="image/*"
             onChange={e => setOtherImage2(e.target.files[0])}
-            value={otherImage2}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage2 && (<div className='error'>{validationErrors.badOtherImage2}</div>)}
           <input
@@ -236,7 +229,6 @@ function CreateASpot() {
             type="file"
             accept="image/*"
             onChange={e => setOtherImage3(e.target.files[0])}
-            value={otherImage3}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage3 && (<div className='error'>{validationErrors.badOtherImage3}</div>)}
           <input
@@ -245,7 +237,6 @@ function CreateASpot() {
             type="file"
             accept="image/*"
             onChange={e => setOtherImage4(e.target.files[0])}
-            value={otherImage4}
             placeholder="Image URL" />
           {hasSubmitted && validationErrors.badOtherImage4 && (<div className='error'>{validationErrors.badOtherImage4}</div>)}
         </div>
