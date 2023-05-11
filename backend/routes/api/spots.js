@@ -4,7 +4,7 @@ const spot = require('../../db/models/spot');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const router = express.Router();
 const { Op } = require('sequelize');
-const {multipleMulterUpload, multiplePublicFileUpload } = require("../../awsS3");
+const {multipleMulterUpload, multiplePublicFileUpload, retrievePrivateFile } = require("../../awsS3");
 
 // ------------------------------------------------------
 // Get spots of current user
@@ -52,7 +52,7 @@ router.get('/current', restoreUser, async (req, res, _next) => {
     spot.SpotImages.forEach(spotImage => {
       if (spotImage.preview === true) {
         // let previewImage = spotImage.url
-        let previewImage = retrievePrivateFile(spotImage.key) // retrieve private file from s3
+        let previewImage = spotImage.url // retrieve private file from s3
         spot.previewImage = previewImage
       }
     })
@@ -68,7 +68,6 @@ router.get('/current', restoreUser, async (req, res, _next) => {
   result.Spots = spotsArr;
 
   return res.json(result)
-
 })
 
 
