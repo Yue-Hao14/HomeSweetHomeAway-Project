@@ -40,30 +40,30 @@ function ManageSpots() {
       <div className='all-spots'>
         {spots && Object.values(spots).map((spot) => {
           return (
-            <div className='spot-card'>
-              {/* <a className='clickable-card' href={`/spots/${spot.id}`}> */}
+            <div className='spot-card' key={spot.id}>
+              <a className='clickable-card' href={`/spots/${spot.id}`}>
                 <img className="spot-preview" src={spot.previewImage} alt="spot preview"></img>
-                <div className='spot-name'>{spot.name}</div>
-                <div className="city-state-rating">
-                  <div>{spot.city}, {spot.state}</div>
-                  <div className='star-rating'>
-                    <i class="fa-solid fa-star"></i>
-                    <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
-                  </div>
+              </a>
+              <div className='spot-name'>{spot.name}</div>
+              <div className="city-state-rating">
+                <div>{spot.city}, {spot.state}</div>
+                <div className='star-rating'>
+                  <i className="fa-solid fa-star"></i>
+                  <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
                 </div>
-                <div className='price-update-delete'>
-                  <div><span className='price'>${spot.price}</span> night</div>
-                  <div className='update-delete'>
-                    <button className='deactivated' id="update-spot" onClick={updateSpot} value={spot.id}>Update</button>
-                    <button className='deactivated' id="delete-spot" value={spot.id}>
-                      <OpenModalMenuItem
-                        itemText="Delete"
-                        modalComponent={<DeleteSpotModal spotId={spot.id} />}
-                      />
-                    </button>
-                  </div>
+              </div>
+              <div className='price-update-delete'>
+                <div><span className='price'>${spot.price}</span> night</div>
+                <div className='update-delete'>
+                  <button className='deactivated' id="update-spot" onClick={updateSpot} value={spot.id}>Update</button>
+                  <button className='deactivated' id="delete-spot" value={spot.id}>
+                    <OpenModalMenuItem
+                      itemText="Delete"
+                      modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                    />
+                  </button>
                 </div>
-              {/* </a> */}
+              </div>
             </div>
           )
         })

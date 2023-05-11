@@ -15,7 +15,7 @@ function DeleteSpotModal({ spotId }) {
 
   const handleDeleteSpot = async (e) => {
     e.preventDefault();
-    console.log('handleDelete fired')
+    // console.log('handleDelete fired')
     // console.log(spotId)
 
     await dispatch(deleteSpotDB(spotId))
