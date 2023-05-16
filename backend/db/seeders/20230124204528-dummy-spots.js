@@ -28,7 +28,7 @@ module.exports = {
       country: 'USA',
       name: 'A Black A- Frame: Sustainable Catskills Cabin',
       description: 'The Black A-frame is a two bed two bath 1961 cabin set on a private road in the heart of the Catskills in Kerhonkson, NY. It was named the "Coolest A-frame in NY" by the New York Post in 2020. Relax in the open dinning room with original wood ceilings and beams and enjoy a home cooked meal made in the renovated chef\'s kitchen, or walk outdoors to soak in the magic of the Catskills through the endless wooded views from the back yard!',
-      price: 100
+      price: 470
     },
     {
       ownerId: 2,
@@ -38,7 +38,7 @@ module.exports = {
       country: 'USA',
       name: 'Grandma\'s Castle on the Kohala Coast, Kona',
       description: 'Grandma\'s Castle on the Kohala Coast, Kona- in Moani Heights is our family vacation home with 2 split master suites with their own in suite bathrooms, one with a King bed and the 2nd a Queen. The den has a single bed with trundle that pulls out from underneath. The 20 by 40 foot swimming pool is 8 feet deep. Both the pool and spa are SOLAR heated.',
-      price: 200
+      price: 902
     },
     {
       ownerId: 3,
@@ -48,7 +48,7 @@ module.exports = {
       country: 'USA',
       name: 'Luxury Glamping Dome #1 - Chimney Rock/Lake Lure',
       description: 'Nature meets luxury in this unique Glamping Experience. If you don’t see your dates available, pls check out our other dome “The Overlook.” <br> Enjoy the privacy of a peaceful, secluded setting, without sacrificing comfort. Relax in the hot tub or by the pond. Roast smores at the firepit at night, ( wood not provided) sleep under the stars on a king-size comfort foam bed. Connect with your surroundings without having to rough it.',
-      price: 300
+      price: 347
     },
     {
       ownerId: 1,
@@ -58,7 +58,7 @@ module.exports = {
       country: 'USA',
       name: 'Mykonos Sea View Luxury villa pool kite surf yoga',
       description: 'Calypso Sunset Villa is built in the most privileged position offering complete tranquility combined with breathtaking views and the best sunsets of the island.<br> The villa comprises exquisite luxury, built with every amenity making life richer, more relaxing and more rewarding.',
-      price: 400
+      price: 1802
     },
     {
       ownerId: 2,
@@ -68,7 +68,27 @@ module.exports = {
       country: 'Mexico',
       name: 'Amatlán Casa Caracol',
       description:"Only for lovers of adventure, Casa Caracol is located in the middle of the mountain, at the foot of the Guardians Mountains, in front of La Puerta, in Amatlán de Quetzalcóatl, with a dreamy landscape to be immersed in nature. Ancestral fractal design, which represents an excellent option to sleep on a round bed under a super-dobe dome and looking at the stars from its terraces. Organic architecture, the best option for a magical and sacred place.",
-      price: 500
+      price: 195
+    },
+    {
+      ownerId: 3,
+      address: '666 Road',
+      city: 'Madison',
+      state: 'New Hampshire',
+      country: 'USA',
+      name: 'Breathtaking Views in Conway- Hidden gem!',
+      description:"Chalet in the Clouds! Relax & Rejuvenate w/ panoramic views of White Mountains from any of the 4 decks of Kailaśa Chalet! Perched on top of a mountain overlooking Mt Chocorua & Silver Lake w/ majestic views of Mt Washington Valley. So easy to get lost in the beauty of Kailaśa! Wake up to the experience of being above the clouds overlooking the valley! Settle down after dinner around the stone fireplace while watching your favorite shows on 65\" TV. It's not just a rental it's an experience!",
+      price: 1112
+    },
+    {
+      ownerId: 1,
+      address: '777 Road',
+      city: 'Olhuveli',
+      state: 'North Central Province',
+      country: 'Maldives',
+      name: 'Stunning Villa on the Water w/ Private Pool',
+      description:"The perfect example of affordable luxury, these villas have a built-in wow factor. Incredibly spacious decks are furnished with an oversized daybed, dining area, sun loungers, a private pool and steps straight down to the lagoon. Inside, the king size bedroom boasts an alcoved daybed and a spectacular bathroom.",
+      price: 1712
     },
    ])
   },
