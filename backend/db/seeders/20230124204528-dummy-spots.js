@@ -104,7 +104,7 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       address: {
-        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road']
+        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road','666 Road','777 Road']
       }
     }, {});
   }
