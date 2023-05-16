@@ -90,7 +90,9 @@ function GetSingleSpot() {
           <div className='other-spot-images-container'>
             {
               singleSpot.SpotImages.filter((image) => image.preview === false).map(image => {
-                return <img className='other-spot-images' src={image.url} alt="spot" key={image.id}></img>
+                return <div className='other-spot-images' key={image.id} >
+                  <img src={image.url} alt="spot" key={image.id} />
+                </div>
               })
             }
           </div>

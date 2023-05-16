@@ -24,8 +24,13 @@
 .other-spot-images {
   width: 48%;
   height: 205px;
+  overflow: hidden;
   margin-left: 0.2vw;
   margin-bottom: 0.2vw;
+}
+.other-spot-images img {
+  width: 100%;
+  height: 100%;
 }
 
 .owner-description-price-reserve {
