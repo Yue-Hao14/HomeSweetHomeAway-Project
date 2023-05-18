@@ -1,42 +1,40 @@
 @media screen and (min-width:1500px) {
   .spot-card {
-    width: 23vw;
+    width: 24vw;
   }
 }
 
 @media screen and (min-width:1000px) and (max-width: 1500px) {
   .spot-card {
-    width: 31vw;
+    width: 32vw;
   }
 }
 
 @media screen and (min-width:700px) and (max-width: 1000px) {
   .spot-card {
-    width: 48vw;
+    width: 49vw;
   }
 }
 
 @media screen and (max-width:700px) {
   .spot-card {
-    width: 100vw;
+    width: 99vw;
   }
 }
-
-
 
 .all-spots {
   display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100vw;
+  /* width: 100vw; */
   padding: auto;
+  justify-content: space-between;
 }
 
 .spot-card {
   display: flex;
   flex-direction: column;
-  /* width: 270px; */
-  margin: 0.5vw
+  margin-bottom: 20px;
 }
 
 .clickable-card {
@@ -45,20 +43,21 @@
 }
 
 .spot-preview {
-  width: 270px;
-  height: 250px;
+  width: 360px;
+  height: 300px;
   border-radius: 5%;
+  margin-bottom: 5px;
 }
 
 #spot-name {
-  width: 270px;
+  width: 360px;
 }
 
 .city-state-rating {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 270px;
+  width: 360px;
 }
 
 .star-rating {
