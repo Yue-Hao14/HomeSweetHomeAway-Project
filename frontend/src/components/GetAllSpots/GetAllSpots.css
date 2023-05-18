@@ -6,7 +6,7 @@
 
 @media screen and (min-width:1000px) and (max-width: 1500px) {
   .spot-card {
-    width: 32vw;
+    width: 30vw;
   }
 }
 
@@ -27,13 +27,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   padding: auto;
-  justify-content: space-between;
 }
 
 .spot-card {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin: 20px 10px;
 }
 
 .clickable-card {
