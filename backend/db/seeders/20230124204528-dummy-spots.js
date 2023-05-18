@@ -53,9 +53,9 @@ module.exports = {
     {
       ownerId: 1,
       address: '444 Road',
-      city: 'New York',
-      state: 'NY',
-      country: 'USA',
+      city: 'Mykonos',
+      state: 'Egeo',
+      country: 'Greece',
       name: 'Mykonos Sea View Luxury villa pool kite surf yoga',
       description: 'Calypso Sunset Villa is built in the most privileged position offering complete tranquility combined with breathtaking views and the best sunsets of the island.<br> The villa comprises exquisite luxury, built with every amenity making life richer, more relaxing and more rewarding.',
       price: 1802
@@ -90,6 +90,56 @@ module.exports = {
       description:"The perfect example of affordable luxury, these villas have a built-in wow factor. Incredibly spacious decks are furnished with an oversized daybed, dining area, sun loungers, a private pool and steps straight down to the lagoon. Inside, the king size bedroom boasts an alcoved daybed and a spectacular bathroom.",
       price: 1712
     },
+    {
+      ownerId: 2,
+      address: '888 Road',
+      city: 'Kyoto-fu',
+      state: 'Kyoto',
+      country: 'Japan',
+      name: 'Tabitabi Moonlight',
+      description:"「Tabitabi Moonlight」 is a traditional two-storey machiya , which was built in the Taisho era with more than one hundred years history. We retain the original properties of the machiya by using a lot of wood materials, and design of hollow-out and high ceilings and embellishment of cement and steel elements give this house a sense of modernity. Here, you can experience the original and traditional Japan, and also the ingenuity of combining modern elements with traditional craftsmanship.",
+      price: 381
+    },
+    {
+      ownerId: 3,
+      address: '999 Road',
+      city: 'Hella',
+      state: 'Hella',
+      country: 'Iceland',
+      name: 'Glass cottage with Hot tub "Blár"',
+      description:"Welcome to Glass cottages Iceland. We are located on a lava desert in the south of Iceland. 5 minutes from the small town of Hella, close to all the popular attractions that southern Iceland has to offer, but also in a secret and secluded location.",
+      price: 787
+    },
+    {
+      ownerId: 1,
+      address: '1000 Road',
+      city: 'Canmore',
+      state: 'Alberta',
+      country: 'Canada',
+      name: 'Stunning Top Flr Luxury Suite w/ Mountain Views!',
+      description:"Welcome to this top floor suite with vaulted ceilings, massive windows and unobstructed views of the Rundle Range, Ha Ling Peak and Grotto Mountain! Located at Stoneridge Mountain Resort, this condo is just minutes from the heart of Downtown Canmore, Bow River, local shops and restaurants.",
+      price: 285
+    },
+    {
+      ownerId: 2,
+      address: '1001 Road',
+      city: 'Giza',
+      state: 'Giza',
+      country: 'Egypt',
+      name: 'Pyramids view apartment & tour service',
+      description:"Furnished roof flat for rent located 200 m from monuments area with magnificent view of Sphinx and Pyramids. The apartment now have air conditions in all of it not only the bedrooms.",
+      price: 80
+    },
+    {
+      ownerId: 3,
+      address: '1002 Road',
+      city: 'Sindun-myeon',
+      state: 'Gyeonggi Province',
+      country: 'South Korea',
+      name: 'Emotional Healing in Lee Cheon-si, Seoul',
+      description:"Tongui-shaped cottage in a two-thousand pottery art village. A large monolithic house with a three-floor terrace of the Serra Guitar Cultural Museum, renowned for its distinctive facade in a two-thousand pottery art village that blends very well with nature. Enjoy a relaxing emotional healing holiday in a cozy, welcoming room. On the third floor of a village without a tall building, you can enjoy the open nature scene, and picnic on the lawn in front of the Tongui house. If you prefer, you can also take Ukurelle lessons on the first floor of the building, a handcrafted workshop and other venue.",
+      price: 94
+    },
    ])
   },
 
@@ -104,7 +154,7 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       address: {
-        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road','666 Road','777 Road']
+        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road','666 Road','777 Road','888 Road','999 Road','1000 Road']
       }
     }, {});
   }
