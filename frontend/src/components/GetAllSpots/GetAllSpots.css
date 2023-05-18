@@ -1,12 +1,12 @@
 @media screen and (min-width:1500px) {
   .spot-card {
-    width: 24vw;
+    width: 23vw;
   }
 }
 
 @media screen and (min-width:1000px) and (max-width: 1500px) {
   .spot-card {
-    width: 32vw;
+    width: 30vw;
   }
 }
 
@@ -26,15 +26,13 @@
   display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* width: 100vw; */
   padding: auto;
-  justify-content: space-between;
 }
 
 .spot-card {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin: 20px 10px;
 }
 
 .clickable-card {
@@ -43,21 +41,21 @@
 }
 
 .spot-preview {
-  width: 360px;
+  width: 350px;
   height: 300px;
   border-radius: 5%;
   margin-bottom: 5px;
 }
 
 #spot-name {
-  width: 360px;
+  width: 350px;
 }
 
 .city-state-rating {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 360px;
+  width: 350px;
 }
 
 .star-rating {
