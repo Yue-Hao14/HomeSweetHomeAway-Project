@@ -140,6 +140,46 @@ module.exports = {
       description:"Tongui-shaped cottage in a two-thousand pottery art village. A large monolithic house with a three-floor terrace of the Serra Guitar Cultural Museum, renowned for its distinctive facade in a two-thousand pottery art village that blends very well with nature. Enjoy a relaxing emotional healing holiday in a cozy, welcoming room. On the third floor of a village without a tall building, you can enjoy the open nature scene, and picnic on the lawn in front of the Tongui house. If you prefer, you can also take Ukurelle lessons on the first floor of the building, a handcrafted workshop and other venue.",
       price: 94
     },
+    {
+      ownerId: 1,
+      address: '1003 Road',
+      city: 'Ponta Delgada',
+      state: 'S. Miguel - Açores',
+      country: 'Portugal',
+      name: 'Flea Windmill | The Mill',
+      description:"Built in the 19th century, with a 360 degrees view over the sea and surroundings on the top floor. It features a Bedroom with a king size bed, a very well-decorated living room with kitchenette, and a WC. Free WiFi, air conditioning, Led TV and DVD player. Private parking inside the premises, providing extra security. Perfect for an unforgettable honeymoon experience.",
+      price: 157
+    },
+    {
+      ownerId: 2,
+      address: '1004 Road',
+      city: 'Rhinebeck',
+      state: 'New York',
+      country: 'USA',
+      name: 'Architectural wonder in the woods',
+      description:"Unique experience, secluded. Enjoy a weekend or a few days eco-friendly retreat in an architectural, geometric masterpiece on 30 preserved acres just minutes from all that Rhinebeck and the Hudson Valley have to offer. The house is an open plan, and though it has zero bedrooms, it can sleep 3!",
+      price: 591
+    },
+    {
+      ownerId: 3,
+      address: '1005 Road',
+      city: 'Willington',
+      state: 'Connecticut',
+      country: 'USA',
+      name: 'Heavenly Treehouse in Countryside w/ Farm Animals',
+      description:"Have you ever wanted to stay in a Treehouse? Well... here is your chance! The Treehouse is custom built for your comfort at Bluebird Farm! As you drive up to Bluebird Farm you will be captivated by amazing views of the Bluebird Farm Life. This amazing Cabin in the sky has all the modern amenities you'll need to relax in the countryside, while still giving you a sense of camping. Spacious but simply designed for your comfort, the Treehouse has all the supplies you need in the kitchenette, bathroom, and shower. Great Wi-Fi for those who work from home, need to catch up on emails or seek creative spaces in-between relaxing at Bluebird Farm. During your lazy days you can visit the Farm animals, guided by property management in the morning and early evenings. Say, Hi to our animals / pets during the farm stay, you'll enjoy meeting Babydoll Sheep, Goats, Chickens, Pigs, Cats and Dogs. You can walk the grounds and even take a small hike! Relax among the farm as you take in the smell, taste and feel the air around you! Sounds relaxing eh? Or, take a day trip to local vineyards or breweries. Into antiquing or vintage? Well the property is close to some of the coolest in the State!",
+      price: 515
+    },
+    {
+      ownerId: 1,
+      address: '1006 Road',
+      city: 'Nassau',
+      state: 'New Providence',
+      country: 'Bahamas',
+      name: 'Amura sailing Catamaran with captain and chef',
+      description:"The nicest thing about the Bahamas is the water! Why staying in a hotel on land when you can visit the most beautiful highlights of the Bahamas. This boat is a 56 foot lagoon. There are 4 rooms and 4 bathrooms, one is occupied by the crew onboard, a great and equipped galley, a nice seated area outside and comfortable space in the front to hang out. You are most welcome to use the snorkeling gear, dinghy, paddle boards and tubing.",
+      price: 6619
+    },
    ])
   },
 
@@ -154,7 +194,7 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       address: {
-        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road','666 Road','777 Road','888 Road','999 Road','1000 Road','1001 Road','1002 Road']
+        [Op.in]: ['111 Road','222 Road','333 Road','444 Road','555 Road','666 Road','777 Road','888 Road','999 Road','1000 Road','1001 Road','1002 Road','1003 Road','1004 Road','1005 Road','1006 Road']
       }
     }, {});
   }
