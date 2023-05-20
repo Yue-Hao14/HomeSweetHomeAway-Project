@@ -13,17 +13,20 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 270px;
+  width: 100%;
+  align-items: center;
+  margin: -6px 0px;
 }
 
 .update-delete {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.spot-name {
-  width: 270px;
-  ;
+.spot-name, .city-state-rating {
+  width: 100%;
+  margin-bottom: 3px;
 }
 
 #create-spot,

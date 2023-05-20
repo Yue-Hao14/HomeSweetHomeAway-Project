@@ -39,6 +39,9 @@
   text-decoration: none;
   color: black;
 }
+.clickable-card>div {
+  margin:3px 0px;
+}
 
 .spot-preview {
   width: 350px;

@@ -29,8 +29,7 @@ function GetAllSpots() {
                   <div>{spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New"}</div>
                 </div>
               </div>
-              <div>
-                <span className='price'>${spot.price}</span> night</div>
+              <div><span className='price'>${spot.price}</span> night</div>
             </a>
           </div>
         )
